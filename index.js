@@ -25,6 +25,7 @@ const isGoodRequest = request => {
 };
 
 application.post('/', (request, response)=>{
+  response.append('Access-Control-Allow-Origin', '*');
   if(isGoodRequest(request)){
     response.json({
       "text": getResponse(request.body),
@@ -39,8 +40,5 @@ application.post('/', (request, response)=>{
 });
 
 
-
-
-application.listen(8000, ()=>console.log("listening on 8000"));
 
 module.exports.handler = serverless(application);

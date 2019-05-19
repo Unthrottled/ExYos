@@ -4,6 +4,9 @@
 # Serverless.yml is the configuration the CLI
 # uses to deploy your code to your provider of choice
 
+plugins:
+  - serverless-offline
+
 # The `service` block is the name of the service
 service: serverless-hello-world
 
@@ -15,10 +18,8 @@ provider:
 # The `functions` block defines what code to deploy
 functions:
   helloWorld:
-    handler: handler.helloWorld
+    handler: index.handler
     # The `events` block defines how to trigger the handler.helloWorld code
     events:
-      - http:
-          path: hello-world
-          method: get
-          cors: true
+      - http: ANY /
+      - http: 'ANY {proxy+}'
