@@ -4,7 +4,7 @@
   "description": "Express Yourself Slack Slash Command",
   "main": "index.js",
   "repository": "git@github.com:cyclic-reference/ExYos.git",
-  "author": "DATBOI <alexsimons9999@gmail.com>",
+  "author": "Alex Simons <alexsimons9999@gmail.com>",
   "license": "MIT",
   "private": false,
   "dependencies": {
