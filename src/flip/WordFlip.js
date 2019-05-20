@@ -6,7 +6,6 @@ const flipWord = (workToFlip) => {
     .reduce((message, character)=> character + message, '');
 };
 
-
 module.exports = {
   flipWord
 };

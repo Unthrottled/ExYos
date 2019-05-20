@@ -1,4 +1,4 @@
-const {flipWord} = require('./WordFlip');
+const {flipWord} = require('./flip/WordFlip');
 
 const getResponse = requestBody => {
   return '(╯°□°)╯︵' + flipWord(requestBody.text.trim().substring(5));

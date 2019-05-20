@@ -19,7 +19,4 @@ module.exports.default = `
                                 /
                                /
                               /
-
-
-
-`
+`;
