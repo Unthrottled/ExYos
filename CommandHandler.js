@@ -1,11 +1,4 @@
-const upsideDownDictionary = require('./dictionary');
-
-const flipWord = (workToFlip) => {
-  let characters = workToFlip.split("");
-  return characters.map(character => upsideDownDictionary[character] || upsideDownDictionary[character.toLocaleLowerCase()] || character)
-    .reduce((message, character)=> character + message, '');
-};
-
+const {flipWord} = require('./WordFlip');
 
 const getResponse = requestBody => {
   return '(╯°□°)╯︵' + flipWord(requestBody.text.trim().substring(5));
@@ -17,9 +10,9 @@ const isGoodRequest = request => {
     requestBody.text.startsWith("flip")
 };
 
-const handler = (request, response)=>{
+const handler = (request, response) => {
   response.append('Access-Control-Allow-Origin', '*');
-  if(isGoodRequest(request)){
+  if (isGoodRequest(request)) {
     response.json({
       "text": getResponse(request.body),
       "response_type": "in_channel",
@@ -27,9 +20,14 @@ const handler = (request, response)=>{
   } else {
     response.json({
       "text": `Usage: <Command> <Argument>`,
-      "response_type": "in_channel",
+      "attachments": [
+        {
+          "text": "Available Commands",
+        }
+      ],
+      "response_type": "ephemeral",
     });
   }
 };
 
-module .exports.default = handler;
+module.exports.default = handler;
