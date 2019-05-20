@@ -10,14 +10,27 @@ const extractFlipExpressionParts = flipArguments => {
     flippedItem
   }
 };
+const extractUnFlipExpressionParts = flipArguments => {
+  const face = 'º _ º'||'°□°'|| 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
+  const unFlippedItem = flipArguments || '┻━┻' || '/(.□ . \\)';
+  return {
+    face,
+    unFlippedItem
+  }
+};
 
 const FLIP = 'flip';
 const UNFLIP = 'unflip';
 const ZALGO = 'zalgo';
 
-const flipWordCommand = flipArguments => {
+const flipCommand = flipArguments => {
   const {face, velocity, flippedItem} = extractFlipExpressionParts(flipArguments);
   return `(╯${face})╯${velocity}${flippedItem}`
+};
+
+const unFlipCommand = flipArguments => {
+  const {face, unFlippedItem} = extractUnFlipExpressionParts(flipArguments);
+  return `${unFlippedItem}ノ(${face}ノ)`
 };
 
 const extractCommand = fullCommand=> {
@@ -34,8 +47,8 @@ const getResponse = requestBody => {
   const fullCommand = requestBody.text.trim();
   const {command, arguments } = extractCommand(fullCommand);
   switch (command) {
-    case FLIP: return flipWordCommand(arguments);
-    case UNFLIP:
+    case FLIP: return flipCommand(arguments);
+    case UNFLIP: return unFlipCommand(arguments);
     case ZALGO:
     default: return '¯\\_(ツ)_/¯'
   }
