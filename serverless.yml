@@ -13,7 +13,7 @@ service: serverless-hello-world
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
 
 # The `functions` block defines what code to deploy
 functions:
@@ -21,5 +21,9 @@ functions:
     handler: index.handler
     # The `events` block defines how to trigger the handler.helloWorld code
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http:
+          path: / # this matches the base path
+          method: ANY
+      - http:
+          path: /{any+} # this matches any path, the token 'any' doesn't mean anything special
+          method: ANY

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const application = express();
 const upsideDownDictionary = require('./dictionary');
+const teapot = require('./Teapot').default;
 
 const flipWord = (workToFlip) => {
   let characters = workToFlip.split("");
@@ -37,6 +38,10 @@ application.post('/', (request, response)=>{
       "response_type": "in_channel",
     });
   }
+});
+
+application.use((request, response, next)=>{
+  response.status(418).send(teapot)
 });
 
 
