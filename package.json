@@ -13,9 +13,11 @@
     "serverless-http": "^2.0.2"
   },
   "scripts": {
-    "start:local": "sls offline start"
+    "start": "sls offline start",
+    "test": "jest"
   },
   "devDependencies": {
+    "jest": "^24.8.0",
     "serverless-offline": "^4.10.3"
   }
 }
