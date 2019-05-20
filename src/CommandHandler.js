@@ -17,10 +17,18 @@ const getResponse = requestBody => {
   return `(╯${face})╯${velocity}${flippedItem}`;
 };
 
+const commands =[
+  'flip',
+  'unflip',
+  'flip-table',
+  'unflip-table',
+  'zalgo',
+];
+
 const isGoodRequest = request => {
   const requestBody = request.body;
   return requestBody && requestBody.text &&
-    requestBody.text.startsWith("flip")
+    commands.findIndex(command => requestBody.text.startsWith(command)) > -1;
 };
 
 const handler = (request, response) => {
