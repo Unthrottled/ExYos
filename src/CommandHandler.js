@@ -1,7 +1,20 @@
 const {flipWord} = require('./flip/WordFlip');
 
+const extractFlipExpressionParts = command => {
+  const face = '°□°';
+  const velocity = '︵' || '彡';
+  const flippedItem = flipWord(command.substring(5)) || '┻━┻';
+  return {
+    face,
+    velocity,
+    flippedItem
+  }
+};
+
 const getResponse = requestBody => {
-  return '(╯°□°)╯︵' + flipWord(requestBody.text.trim().substring(5));
+  let command = requestBody.text.trim();
+  const {face, velocity, flippedItem } = extractFlipExpressionParts(command);
+  return `(╯${face})╯${velocity}${flippedItem}`;
 };
 
 const isGoodRequest = request => {
