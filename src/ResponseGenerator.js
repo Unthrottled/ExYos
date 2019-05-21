@@ -40,11 +40,15 @@ const isGoodRequest = requestBody => {
     commands.findIndex(command => requestBody.text.startsWith(`${command} `)) > -1;
 };
 
-
 const createCommandResponse = slackRequest => {
   if (isGoodRequest(slackRequest)) { // todo: handle correct command, bad arguments
     return {
       "text": getResponse(slackRequest),
+      "attachments": [
+        {
+          "text": `Courtesy of <@${slackRequest.user_id}>`
+        }
+      ],
       "response_type": "in_channel",
     };
   } else {
