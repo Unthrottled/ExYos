@@ -46,7 +46,7 @@ const createCommandResponse = slackRequest => {
       "text": getResponse(slackRequest),
       "attachments": [
         {
-          "text": `Courtesy of <@${slackRequest.user_id}>`
+          "text": `Courtesy of <@${(slackRequest.user_id || '').trim()}>`
         }
       ],
       "response_type": "in_channel",
@@ -63,7 +63,6 @@ const createCommandResponse = slackRequest => {
     };
   }
 };
-
 
 const getResponseUrl = requestBody => (requestBody.response_url || '').trim();
 
