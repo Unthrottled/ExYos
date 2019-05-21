@@ -1,14 +1,14 @@
 const {flipCommand, unFlipCommand} = require('./flip/FlipCommands');
-const { isSlackRequest } = require('./Security');
+const {isSlackRequest} = require('./Security');
 
 const FLIP = 'flip';
 const UNFLIP = 'unflip';
-const ZALGO = 'zalgo';
+// const ZALGO = 'zalgo';
 
 const commands = [
   FLIP,
   UNFLIP,
-  ZALGO,
+  // ZALGO,
 ];
 
 const extractCommand = fullCommand => {
@@ -29,7 +29,7 @@ const getResponse = requestBody => {
       return flipCommand(arguments);
     case UNFLIP:
       return unFlipCommand(arguments);
-    case ZALGO:
+    // case ZALGO:
     default:
       return '¯\\_(ツ)_/¯'
   }
@@ -41,26 +41,36 @@ const isGoodRequest = requestBody => {
 };
 
 const createCommandResponse = slackRequest => {
-  if (isGoodRequest(slackRequest)) { // todo: handle correct command, bad arguments
-    return {
-      "text": getResponse(slackRequest),
-      "attachments": [
-        {
-          "text": `Courtesy of <@${(slackRequest.user_id || '').trim()}>`
-        }
-      ],
-      "response_type": "in_channel",
-    };
+  if (isGoodRequest(slackRequest)) {
+    return getResponse(slackRequest)
+      .then(responseBody => ({
+        "text": responseBody,
+        "attachments": [
+          {
+            "text": `Courtesy of <@${(slackRequest.user_id || '').trim()}>`,
+          }
+        ],
+        "response_type": 'in_channel',
+      }))
+      .catch(({failureResponse, tip}) => ({
+        "text": failureResponse,
+        "attachments": [
+          {
+            "text": tip,
+          }
+        ],
+        "response_type": "ephemeral",
+      }))
   } else {
-    return {
+    return Promise.resolve({
       "text": `Usage: <Command> <Argument>`,
       "attachments": [
         {
-          "text": "Available Commands",
+          "text": `Available Commands: ${commands.join(", ")}`,
         }
       ],
       "response_type": "ephemeral",
-    };
+    });
   }
 };
 
@@ -69,10 +79,11 @@ const getResponseUrl = requestBody => (requestBody.response_url || '').trim();
 function generateResponse(request) {
   if (isSlackRequest(request)) {
     const requestBody = request.body;
-    return Promise.resolve({
-      slackUrl: getResponseUrl(requestBody),
-      exyosResponse: createCommandResponse(requestBody),
-    });
+    return createCommandResponse(requestBody)
+      .then((exyosResponse) => ({
+        slackUrl: getResponseUrl(requestBody),
+        exyosResponse
+      }));
   } else {
     return Promise.reject("Not a Slack Request");
   }

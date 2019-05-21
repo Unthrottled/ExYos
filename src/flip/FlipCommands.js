@@ -21,12 +21,12 @@ const extractUnFlipExpressionParts = flipArguments => {
 
 const flipCommand = flipArguments => {
   const {face, velocity, flippedItem} = extractFlipExpressionParts(flipArguments);
-  return `(╯${face})╯${velocity}${flippedItem}`
+  return Promise.resolve(`(╯${face})╯${velocity}${flippedItem}`);
 };
 
 const unFlipCommand = flipArguments => {
   const {face, unFlippedItem} = extractUnFlipExpressionParts(flipArguments);
-  return `${unFlippedItem}ノ(${face}ノ)`
+  return Promise.resolve(`${unFlippedItem}ノ(${face}ノ)`);
 };
 
 
