@@ -1,7 +1,7 @@
 const {flipWord} = require('./flip/WordFlip');
 
 const extractFlipExpressionParts = flipArguments => {
-  const face = '°□°'|| 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
+  const face = '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
   const velocity = '︵' || '彡';
   const flippedItem = flipWord(flipArguments) || '┻━┻' || '/(.□ . \\)';
   return {
@@ -11,7 +11,7 @@ const extractFlipExpressionParts = flipArguments => {
   }
 };
 const extractUnFlipExpressionParts = flipArguments => {
-  const face = 'º _ º'||'°□°'|| 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
+  const face = 'º _ º' || '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
   const unFlippedItem = flipArguments || '┻━┻' || '/(.□ . \\)';
   return {
     face,
@@ -33,10 +33,10 @@ const unFlipCommand = flipArguments => {
   return `${unFlippedItem}ノ(${face}ノ)`
 };
 
-const extractCommand = fullCommand=> {
+const extractCommand = fullCommand => {
   const firstSpace = fullCommand.indexOf(' ');
   const command = fullCommand.substring(0, firstSpace);
-  const arguments = fullCommand.substring(firstSpace+1);
+  const arguments = fullCommand.substring(firstSpace + 1);
   return {
     command,
     arguments
@@ -45,12 +45,15 @@ const extractCommand = fullCommand=> {
 
 const getResponse = requestBody => {
   const fullCommand = requestBody.text.trim();
-  const {command, arguments } = extractCommand(fullCommand);
+  const {command, arguments} = extractCommand(fullCommand);
   switch (command) {
-    case FLIP: return flipCommand(arguments);
-    case UNFLIP: return unFlipCommand(arguments);
+    case FLIP:
+      return flipCommand(arguments);
+    case UNFLIP:
+      return unFlipCommand(arguments);
     case ZALGO:
-    default: return '¯\\_(ツ)_/¯'
+    default:
+      return '¯\\_(ツ)_/¯'
   }
 };
 
@@ -60,21 +63,19 @@ const commands = [
   ZALGO,
 ];
 
-const isGoodRequest = request => {
-  const requestBody = request.body;
+const isGoodRequest = requestBody => {
   return requestBody && requestBody.text &&
     commands.findIndex(command => requestBody.text.startsWith(`${command} `)) > -1;
 };
 
-const handler = (request, response) => {
-  response.append('Access-Control-Allow-Origin', '*');
-  if (isGoodRequest(request)) { // todo: handle correct command, bad arguments
-    response.json({
-      "text": getResponse(request.body),
+const createCommandResponse = slackRequest => {
+  if (isGoodRequest(slackRequest)) { // todo: handle correct command, bad arguments
+    return {
+      "text": getResponse(slackRequest),
       "response_type": "in_channel",
-    });
+    };
   } else {
-    response.json({
+    return {
       "text": `Usage: <Command> <Argument>`,
       "attachments": [
         {
@@ -82,8 +83,49 @@ const handler = (request, response) => {
         }
       ],
       "response_type": "ephemeral",
-    });
+    };
   }
 };
 
-module.exports.default = handler;
+const isSlackRequest = request =>
+  request && request.header &&
+  request.header('X-Slack-Request-Timestamp');//todo: validate request
+
+const getResponseUrl = requestBody => (requestBody.response_url || '').trim();
+
+function generateResponse(request) {
+  if (isSlackRequest(request)) {
+    const requestBody = request.body;
+    return Promise.resolve({
+      slackUrl: getResponseUrl(requestBody),
+      exyosResponse: createCommandResponse(requestBody),
+    });
+  } else {
+    return Promise.reject("Not a Slack Request");
+  }
+}
+
+const axios = require('axios');
+
+const sendDelayedResponse = (slackUrl, exyosResponse) => {
+  console.log(slackUrl, exyosResponse);
+  return axios.post(slackUrl, exyosResponse, {
+    headers: {'content-type': 'application/json'},
+  }).catch(error => {
+    console.error('Unable to send response to Slack for raisins', error);
+  });
+};
+
+const processRequest = request => {
+  return generateResponse(request)
+    .then(({slackUrl, exyosResponse}) => sendDelayedResponse(slackUrl, exyosResponse))
+    .catch(() => {
+    });
+};
+
+const handler = (request, response) => {
+  processRequest(request);
+  response.status(200).end();
+};
+
+module.exports = handler;

@@ -8,7 +8,7 @@ const teapot = require('./Teapot').default;
 application.use(bodyParser.json({strict: false}));
 application.use(bodyParser.urlencoded({extended: true}));
 
-const commandHandler = require('./CommandHandler').default;
+const commandHandler = require('./CommandHandler');
 application.post('/', commandHandler);
 
 application.use((request, response)=>{
