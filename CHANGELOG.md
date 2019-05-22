@@ -2,6 +2,7 @@ Changelog
 ---
 
 ## 0.2.0
+
 The user command will no longer be sent in channel, just the ExYos response.
 
 ## 0.1.0

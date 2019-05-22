@@ -1,32 +1,61 @@
 const {flipWord} = require('./WordFlip');
 
 const extractFlipExpressionParts = flipArguments => {
-  const face = '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
-  const velocity = '︵' || '彡';
-  const flippedItem = flipWord(flipArguments) || '┻━┻' || '/(.□ . \\)';
-  return {
-    face,
-    velocity,
-    flippedItem
-  }
+  return parseFlipArguments(flipArguments)
+    .then(parsedArguments => {
+      const face = '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
+      const velocity = '︵' || '彡';
+      const flippedItem = flipWord(flipArguments) || '┻━┻' || '/(.□ . \\)';
+      return {
+        face,
+        velocity,
+        flippedItem
+      }
+    });
 };
+
+// {
+//   tip: 'aoeu',
+//   failureResponse: 'You did it wrongS'
+// }
+
+const parseFlipArguments = flipArguments => {
+  return Promise.resolve(flipArguments)
+    .then(arguments => {
+      return {
+        flippedItem: {
+          type: 'WORD'
+        },
+        velocity: {
+          type: 'HARD'
+        },
+        face: {
+          type: 'LOOK'
+        },
+      }
+    });
+};
+
 const extractUnFlipExpressionParts = flipArguments => {
-  const face = 'º _ º' || '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
-  const unFlippedItem = flipArguments || '┻━┻' || '/(.□ . \\)';
-  return {
-    face,
-    unFlippedItem
-  }
+  return parseUnFlipArguments(flipArguments)
+    .then(parsedArguments=>{
+      const face = 'º _ º' || '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
+      const unFlippedItem = flipArguments || '┳━┳' || '(*￣m￣)';
+      return {
+        face,
+        unFlippedItem
+      }
+    });
 };
 
 const flipCommand = flipArguments => {
-  const {face, velocity, flippedItem} = extractFlipExpressionParts(flipArguments);
-  return Promise.resolve(`(╯${face})╯${velocity}${flippedItem}`);
+  return extractFlipExpressionParts(flipArguments)
+    .then(({face, velocity, flippedItem})=>`(╯${face})╯${velocity}${flippedItem}`);
 };
 
 const unFlipCommand = flipArguments => {
-  const {face, unFlippedItem} = extractUnFlipExpressionParts(flipArguments);
-  return Promise.resolve(`${unFlippedItem}ノ(${face}ノ)`);
+  return extractUnFlipExpressionParts(flipArguments)
+    .then(({face, unFlippedItem})=> `${unFlippedItem}ノ(${face}ノ)`);
 };
 
 
