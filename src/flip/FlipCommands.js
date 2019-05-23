@@ -13,12 +13,14 @@ const extractFlipExpressionParts = flipArguments => {
       }
     });
 };
+
 const YELLING = 'YELLING';
 const LOOK = 'LOOK';
 const RAGE = 'RAGE';
 const ALARMED = 'ALARMED';
 const LENNY = 'LENNY';
 const U_CANT_BE_SRS = 'U_CANT_BE_SRS';
+const SOLEMN = 'SOLEMN';
 const getFace = faceType => {
   switch (faceType) {
     case YELLING:
@@ -33,6 +35,8 @@ const getFace = faceType => {
       return '◉Д◉';
     case U_CANT_BE_SRS:
       return '●_●';
+    case SOLEMN:
+      return 'º _ º';
   }
 };
 const NORMAL_VELOCITY = 'NORMAL_VELOCITY';
@@ -86,7 +90,6 @@ const actuallyParseArguments = argumentsToParse => {
       type: YELLING
     },
   });
-  console.log(argumentProjection);
   return Promise.resolve(argumentProjection);
 };
 
@@ -108,20 +111,69 @@ const parseFlipArguments = flipArguments => {
             type: YELLING
           },
         }
-
       }
     });
+};
+
+const actuallyParseUnFlipArguments = argumentsToParse => {
+  const parsedArguments = argumentsToParse.split(" ");
+  const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
+    if (currentString === '-table') {
+      builtArguments.flippedItem = {type: TABLE};
+    } else if (currentString.startsWith('-')) {
+      throw new CommandError(`Unknown command: ${currentString}`)
+    }
+    return builtArguments
+  }, {
+    flippedItem: {
+      type: TABLE
+    },
+    face: {
+      type: SOLEMN
+    },
+  });
+  return Promise.resolve(argumentProjection);
+};
+
+const parseUnFlipArguments = unflipArguments => {
+  return Promise.resolve(unflipArguments)
+    .then(arguments => {
+      if (arguments.indexOf('-') > -1) {
+        return actuallyParseUnFlipArguments(arguments);
+      } else {
+        return {
+          flippedItem: {
+            type: PHRASE,
+            payload: arguments,
+          },
+          face: {
+            type: SOLEMN
+          },
+        }
+      }
+    });
+};
+
+const getUnFlippedItem = item => {
+  switch (item.type) {
+    case TABLE:
+      return '┳━┳';
+    case PERSON:
+      return '(*￣m￣)';
+    case PHRASE:
+      return item.payload;
+  }
 };
 
 const extractUnFlipExpressionParts = flipArguments => {
   return parseUnFlipArguments(flipArguments)
     .then(parsedArguments => {
-      const face = 'º _ º' || '°□°' || 'ಠ_ಠ' || 'ಠ益ಠ' || '◉Д◉';
-      const unFlippedItem = flipArguments || '┳━┳' || '(*￣m￣)';
+      const face = getFace(parsedArguments.face.type);
+      const unFlippedItem = getUnFlippedItem(parsedArguments.flippedItem);
       return {
         face,
         unFlippedItem
-      }
+      };
     });
 };
 
@@ -134,7 +186,6 @@ const unFlipCommand = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)
     .then(({face, unFlippedItem}) => `${unFlippedItem}ノ(${face}ノ)`);
 };
-
 
 module.exports = {
   flipCommand,
