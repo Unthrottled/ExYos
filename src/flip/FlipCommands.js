@@ -1,5 +1,12 @@
-const {YELLING, SOLEMN, getFace} = require("../Faces");
+const {YELLING, getFace} = require("../Faces");
+const {
+  TABLE,
+  PERSON,
+  PHRASE,
+} = require('./FlipableItems');
 const {flipWord} = require('./WordFlip');
+const {unFlipCommand} = require('./UnflipCommand');
+const CommandError = require('../CommandError');
 
 const extractFlipExpressionParts = flipArguments => {
   return parseFlipArguments(flipArguments)
@@ -26,9 +33,7 @@ const getVelocity = velocityType => {
   }
 };
 
-const TABLE = 'TABLE';
-const PERSON = 'PERSON';
-const PHRASE = 'PHRASE';
+
 const getFlippedItem = item => {
   switch (item.type) {
     case TABLE:
@@ -40,19 +45,13 @@ const getFlippedItem = item => {
   }
 };
 
-function CommandError(failureResponse, tip) {
-  this.failureResponse = failureResponse;
-  this.tip = tip;
-  return this;
-}
-
 const actuallyParseArguments = argumentsToParse => {
   const parsedArguments = argumentsToParse.split(" ");
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown command: ${currentString}`)
+      throw new CommandError(`Unknown Argument: ${currentString}`, 'Available Arguments: -table')
     }
     return builtArguments
   }, {
@@ -91,77 +90,11 @@ const parseFlipArguments = flipArguments => {
     });
 };
 
-const actuallyParseUnFlipArguments = argumentsToParse => {
-  const parsedArguments = argumentsToParse.split(" ");
-  const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
-    if (currentString === '-table') {
-      builtArguments.flippedItem = {type: TABLE};
-    } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown command: ${currentString}`)
-    }
-    return builtArguments
-  }, {
-    flippedItem: {
-      type: TABLE
-    },
-    face: {
-      type: SOLEMN
-    },
-  });
-  return Promise.resolve(argumentProjection);
-};
-
-const parseUnFlipArguments = unflipArguments => {
-  return Promise.resolve(unflipArguments)
-    .then(arguments => {
-      if (arguments.indexOf('-') > -1) {
-        return actuallyParseUnFlipArguments(arguments);
-      } else {
-        return {
-          flippedItem: {
-            type: PHRASE,
-            payload: arguments,
-          },
-          face: {
-            type: SOLEMN
-          },
-        }
-      }
-    });
-};
-
-const getUnFlippedItem = item => {
-  switch (item.type) {
-    case TABLE:
-      return '┳━┳';
-    case PERSON:
-      return '(*￣m￣)';
-    case PHRASE:
-      return item.payload;
-  }
-};
-
-const extractUnFlipExpressionParts = flipArguments => {
-  return parseUnFlipArguments(flipArguments)
-    .then(parsedArguments => {
-      const face = getFace(parsedArguments.face.type);
-      const unFlippedItem = getUnFlippedItem(parsedArguments.flippedItem);
-      return {
-        face,
-        unFlippedItem
-      };
-    });
-};
-
 const flipCommand = flipArguments => {
   return extractFlipExpressionParts(flipArguments)
     .then(({face, velocity, flippedItem}) => `(╯${face})╯${velocity}${flippedItem}`);
 };
 
-const unFlipCommand = flipArguments => {
-  return extractUnFlipExpressionParts(flipArguments)
-    .then(({face, unFlippedItem}) => `${unFlippedItem}ノ(${face}ノ)`);
-};
 
 module.exports = {
   flipCommand,
