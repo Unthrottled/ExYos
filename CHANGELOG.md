@@ -1,6 +1,12 @@
 Changelog
 ---
 
+## 0.3.0
+
+Tables can now be flipped and unflipped!
+- `/exyos flip -table`
+- `/exyos unflip -table`
+
 ## 0.2.0
 
 The user command will no longer be sent in channel, just the ExYos response.
