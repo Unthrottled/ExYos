@@ -18,6 +18,7 @@ const LOOK = 'LOOK';
 const RAGE = 'RAGE';
 const ALARMED = 'ALARMED';
 const LENNY = 'LENNY';
+const U_CANT_BE_SRS = 'U_CANT_BE_SRS';
 const getFace = faceType => {
   switch (faceType) {
     case YELLING:
@@ -30,6 +31,8 @@ const getFace = faceType => {
       return 'ಠ益ಠ';
     case ALARMED:
       return '◉Д◉';
+    case U_CANT_BE_SRS:
+      return '●_●';
   }
 };
 const NORMAL_VELOCITY = 'NORMAL_VELOCITY';
@@ -42,11 +45,6 @@ const getVelocity = velocityType => {
       return '彡';
   }
 };
-
-// {
-//   tip: 'aoeu',
-//   failureResponse: 'You did it wrongS'
-// }
 
 const TABLE = 'TABLE';
 const PERSON = 'PERSON';
@@ -62,21 +60,41 @@ const getFlippedItem = item => {
   }
 };
 
+function CommandError(failureResponse, tip) {
+  this.failureResponse = failureResponse;
+  this.tip = tip;
+  return this;
+}
+
+const actuallyParseArguments = argumentsToParse => {
+  const parsedArguments = argumentsToParse.split(" ");
+  const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
+    if (currentString === '-table') {
+      builtArguments.flippedItem = {type: TABLE};
+    } else if (currentString.startsWith('-')) {
+      throw new CommandError(`Unknown command: ${currentString}`)
+    }
+    return builtArguments
+  }, {
+    flippedItem: {
+      type: TABLE
+    },
+    velocity: {
+      type: NORMAL_VELOCITY
+    },
+    face: {
+      type: YELLING
+    },
+  });
+  console.log(argumentProjection);
+  return Promise.resolve(argumentProjection);
+};
+
 const parseFlipArguments = flipArguments => {
   return Promise.resolve(flipArguments)
     .then(arguments => {
       if (arguments.indexOf('-') > -1) {
-        return {
-          flippedItem: {
-            type: TABLE
-          },
-          velocity: {
-            type: FORCEFUL_VELOCITY
-          },
-          face: {
-            type: YELLING
-          },
-        }
+        return actuallyParseArguments(arguments);
       } else {
         return {
           flippedItem: {

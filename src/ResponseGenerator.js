@@ -55,9 +55,15 @@ const createCommandResponse = slackRequest => {
       .catch(({failureResponse, tip}) => ({
         "text": failureResponse,
         "attachments": [
-          {
-            "text": tip,
-          }
+          ...(tip ? [
+            {
+              "text": tip,
+            }
+          ] : [
+            {
+              "text": `Available Commands: ${commands.join(", ")}`,
+            }
+          ])
         ],
         "response_type": "ephemeral",
       }))
