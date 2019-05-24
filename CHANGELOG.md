@@ -2,10 +2,11 @@ Changelog
 ---
 
 ## 0.5.0
+- Better Help documentation
 
-Added more expressiveness functionality:
+- Added more expressiveness functionality:
 
-- `/exyos unflip -alarmed`
+    - `/exyos unflip -alarmed`
 
 
 ## 0.4.0

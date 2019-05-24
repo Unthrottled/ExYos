@@ -573,6 +573,60 @@ describe('ResponseGenerator', () => {
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
+    it('should return help response when given help flip argument', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -help'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('Available Arguments: -table, -rage, -alarmed');
+      expect(response_type).toEqual("ephemeral");
+      expect(text).toEqual('Flip Usage');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return help response when given help flip argument and some other stuff', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -help -rage -table Thanks Obama'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('Available Arguments: -table, -rage, -alarmed');
+      expect(response_type).toEqual("ephemeral");
+      expect(text).toEqual('Flip Usage');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return help response when given help flip argument and some other stuff (Permute)', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -rage -table Thanks Obama -help'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('Available Arguments: -table, -rage, -alarmed');
+      expect(response_type).toEqual("ephemeral");
+      expect(text).toEqual('Flip Usage');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
     it('should return help response when given bad flip argument', async () => {
       const headers = {
         'X-Slack-Request-Timestamp': 'aoeu'
@@ -585,7 +639,7 @@ describe('ResponseGenerator', () => {
         }
       };
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
-      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage, -alarmed');
+      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage, -alarmed, -help');
       expect(response_type).toEqual("ephemeral");
       expect(text).toEqual('Unknown Argument: -loaded-god-complex-cock-it-and-pull-it');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');

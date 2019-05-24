@@ -44,7 +44,11 @@ const getFlippedItem = item => {
   }
 };
 
-const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed'];
+const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
+
+function getAvailableArgumentsString() {
+  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`;
+}
 
 const actuallyParseArguments = flipArgumentToParse => {
   const parsedArguments = flipArgumentToParse.split(" ");
@@ -57,8 +61,10 @@ const actuallyParseArguments = flipArgumentToParse => {
     } else if (currentString === '-alarmed') {
       builtArguments.velocity = {type: FORCEFUL_VELOCITY};
       builtArguments.face = {type: ALARMED}
+    } else if(currentString === '-help'){
+      throw new CommandError(`Flip Usage`, getAvailableArgumentsString())
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown Argument: ${currentString}`, `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`)
+      throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString())
     } else if(builtArguments.flippedItem.type === PHRASE){
       builtArguments.flippedItem.payload += `${currentString} `
     }
