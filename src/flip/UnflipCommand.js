@@ -6,7 +6,11 @@ const {
 } = require('./FlipableItems');
 const CommandError = require('../CommandError');
 
-const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed'];
+const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
+
+function getAvailableArgumentsString() {
+  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`;
+}
 
 const actuallyParseUnFlipArguments = unflipArgumentToParse => {
   const parsedArguments = unflipArgumentToParse.split(" ");
@@ -17,8 +21,10 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
       builtArguments.face = {type: RAGE}
     } else if (currentString === '-alarmed') {
       builtArguments.face = {type: ALARMED}
+    } else if(currentString === '-help'){
+      throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString())
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown Argument: ${currentString}`, `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`)
+      throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString())
     } else if(builtArguments.flippedItem.type === PHRASE){
       builtArguments.flippedItem.payload += `${currentString} `
     }
