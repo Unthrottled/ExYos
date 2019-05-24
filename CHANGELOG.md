@@ -1,6 +1,19 @@
 Changelog
 ---
 
+## 0.4.0
+More expressions are available!
+Feel free to combine for added expressiveness.
+
+- `/exyos flip -rage`
+- `/exyos flip -alarmed`
+- `/exyos unflip -rage`
+
+Added help functionality!
+
+- `/exyos flip -help`
+- `/exyos unflip -help`
+
 ## 0.3.0
 
 Tables can now be flipped and unflipped!
