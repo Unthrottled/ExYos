@@ -1,4 +1,4 @@
-const {SOLEMN, getFace} = require("../Faces");
+const {SOLEMN, RAGE, getFace} = require("../Faces");
 const {
   TABLE,
   PERSON,
@@ -6,18 +6,25 @@ const {
 } = require('./FlipableItems');
 const CommandError = require('../CommandError');
 
+const AVAILABLE_COMMANDS = ['-table', '-rage'];
+
 const actuallyParseUnFlipArguments = unflipArgumentToParse => {
   const parsedArguments = unflipArgumentToParse.split(" ");
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
+    } else if (currentString === '-rage') {
+      builtArguments.face = {type: RAGE}
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown Argument: ${currentString}`, 'Available Arguments: -table')
+      throw new CommandError(`Unknown Argument: ${currentString}`, `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`)
+    } else if(builtArguments.flippedItem.type === PHRASE){
+      builtArguments.flippedItem.payload += `${currentString} `
     }
     return builtArguments
   }, {
     flippedItem: {
-      type: TABLE
+      type: PHRASE,
+      payload: '',
     },
     face: {
       type: SOLEMN
@@ -52,7 +59,7 @@ const getUnFlippedItem = item => {
     case PERSON:
       return '(*￣m￣)';
     case PHRASE:
-      return item.payload;
+      return item.payload.trimRight();
   }
 };
 

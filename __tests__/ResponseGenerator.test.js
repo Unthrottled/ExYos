@@ -250,6 +250,114 @@ describe('ResponseGenerator', () => {
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
+    it('should return unflipped phrase ragefully when told to unflip phrase raging', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'unflip -rage Thanks Obama'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('Thanks Obamaノ(ಠ益ಠノ)');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return unflipped phrase ragefully when told to unflip phrase raging (permute)', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'unflip Thanks Obama -rage'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('Thanks Obamaノ(ಠ益ಠノ)');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return unflipped table ragefully when told to unflip table raging', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'unflip -table -rage'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('┳━┳ノ(ಠ益ಠノ)');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return unflipped table ragefully when told to unflip table raging (permutation)', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'unflip -rage -table'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('┳━┳ノ(ಠ益ಠノ)');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return unflipped table ragefully when told to unflip table  and phrase raging', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'unflip -rage Thanks Obama -table'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('┳━┳ノ(ಠ益ಠノ)');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return unflipped table ragefully when told to unflip table and phrase raging (permute)', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'unflip -table -rage Thanks Obama'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('┳━┳ノ(ಠ益ಠノ)');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
     it('should return unflipped table when told to unflip table and ignore anything else', async () => {
       const headers = {
         'X-Slack-Request-Timestamp': 'aoeu'
