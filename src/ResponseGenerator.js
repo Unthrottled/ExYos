@@ -1,19 +1,21 @@
 const {flipCommand, unFlipCommand} = require('./flip/FlipCommands');
+const {suddenlyCommand} = require('./suddenly/SuddenlyCommand');
+const CommandError = require('./CommandError');
 const {isSlackRequest} = require('./Security');
 
 const FLIP = 'flip';
 const UNFLIP = 'unflip';
-// const ZALGO = 'zalgo';
+const SUDDENLY = 'suddenly';
 
 const commands = [
   FLIP,
   UNFLIP,
-  // ZALGO,
+  SUDDENLY,
 ];
 
 const extractCommand = fullCommand => {
   const firstSpace = fullCommand.indexOf(' ');
-  const command = fullCommand.substring(0, firstSpace);
+  const command = firstSpace > -1 ?  fullCommand.substring(0, firstSpace) : fullCommand;
   const userArguments = fullCommand.substring(firstSpace + 1);
   return {
     command,
@@ -21,6 +23,7 @@ const extractCommand = fullCommand => {
   };
 };
 
+// todo: Command type () (arguments: string)=>Promise<String>
 const getResponse = requestBody => {
   const fullCommand = requestBody.text.trim();
   const {command, userArguments} = extractCommand(fullCommand);
@@ -29,15 +32,16 @@ const getResponse = requestBody => {
       return flipCommand(userArguments);
     case UNFLIP:
       return unFlipCommand(userArguments);
-    // case ZALGO:
+    case SUDDENLY:
+      return suddenlyCommand(userArguments);
     default:
-      return '¯\\_(ツ)_/¯'
+      return Promise.reject(CommandError());
   }
 };
 
 const isGoodRequest = requestBody => {
   return requestBody && requestBody.text &&
-    commands.findIndex(command => requestBody.text.startsWith(`${command} `)) > -1;
+    commands.findIndex(command => requestBody.text.startsWith(`${command}`)) > -1;
 };
 
 const createCommandResponse = slackRequest => {
@@ -69,7 +73,7 @@ const createCommandResponse = slackRequest => {
       }))
   } else {
     return Promise.resolve({
-      "text": `Usage: <Command> <Argument>`,
+      "text": `Usage: <Command> <Arguments>`,
       "attachments": [
         {
           "text": `Available Commands: ${commands.join(", ")}`,
