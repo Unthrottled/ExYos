@@ -30,7 +30,7 @@ describe('ResponseGenerator', () => {
       return expect(result).rejects.toEqual("Not a Slack Request")
     });
 
-    it('should return usage when given', () => {
+    it('should return usage when given an unknown command', () => {
       const headers = {
         'X-Slack-Request-Timestamp': 'aoeu'
       };
@@ -49,6 +49,22 @@ describe('ResponseGenerator', () => {
           "text": "Usage: <Command> <Argument>"
         }, "slackUrl": "https://hooks.slack.com/commands/1234/5678"
       })
+    });
+    it('should return flipped phrase when given phrase to flip', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('(╯°□°)╯︵ɐɯɐqO sʞuɐɥ┴');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
   });
 });
