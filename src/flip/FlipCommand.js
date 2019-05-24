@@ -44,6 +44,8 @@ const getFlippedItem = item => {
   }
 };
 
+const AVAILABLE_COMMANDS = ['-table', '-rage'];
+
 const actuallyParseArguments = flipArgumentToParse => {
   const parsedArguments = flipArgumentToParse.split(" ");
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
@@ -53,7 +55,7 @@ const actuallyParseArguments = flipArgumentToParse => {
       builtArguments.velocity = {type: FORCEFUL_VELOCITY};
       builtArguments.face = {type: RAGE}
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown Argument: ${currentString}`, 'Available Arguments: -table')
+      throw new CommandError(`Unknown Argument: ${currentString}`, `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`)
     } else if(builtArguments.flippedItem.type === PHRASE){
       builtArguments.flippedItem.payload += `${currentString} `
     }
