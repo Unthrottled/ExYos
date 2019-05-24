@@ -1,6 +1,13 @@
 Changelog
 ---
 
+## 0.5.0
+
+Added more expressiveness functionality:
+
+- `/exyos unflip -alarmed`
+
+
 ## 0.4.0
 More expressions are available!
 Feel free to combine for added expressiveness.
