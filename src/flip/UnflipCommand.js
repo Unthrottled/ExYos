@@ -6,8 +6,8 @@ const {
 } = require('./FlipableItems');
 const CommandError = require('../CommandError');
 
-const actuallyParseUnFlipArguments = argumentsToParse => {
-  const parsedArguments = argumentsToParse.split(" ");
+const actuallyParseUnFlipArguments = unflipArgumentToParse => {
+  const parsedArguments = unflipArgumentToParse.split(" ");
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
@@ -28,14 +28,14 @@ const actuallyParseUnFlipArguments = argumentsToParse => {
 
 const parseUnFlipArguments = unflipArguments => {
   return Promise.resolve(unflipArguments)
-    .then(arguments => {
-      if (arguments.indexOf('-') > -1) {
-        return actuallyParseUnFlipArguments(arguments);
+    .then(unflipArgument => {
+      if (unflipArgument.indexOf('-') > -1) {
+        return actuallyParseUnFlipArguments(unflipArgument);
       } else {
         return {
           flippedItem: {
             type: PHRASE,
-            payload: arguments,
+            payload: unflipArgument,
           },
           face: {
             type: SOLEMN

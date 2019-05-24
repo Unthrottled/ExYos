@@ -14,21 +14,21 @@ const commands = [
 const extractCommand = fullCommand => {
   const firstSpace = fullCommand.indexOf(' ');
   const command = fullCommand.substring(0, firstSpace);
-  const arguments = fullCommand.substring(firstSpace + 1);
+  const userArguments = fullCommand.substring(firstSpace + 1);
   return {
     command,
-    arguments
+    userArguments
   };
 };
 
 const getResponse = requestBody => {
   const fullCommand = requestBody.text.trim();
-  const {command, arguments} = extractCommand(fullCommand);
+  const {command, userArguments} = extractCommand(fullCommand);
   switch (command) {
     case FLIP:
-      return flipCommand(arguments);
+      return flipCommand(userArguments);
     case UNFLIP:
-      return unFlipCommand(arguments);
+      return unFlipCommand(userArguments);
     // case ZALGO:
     default:
       return '¯\\_(ツ)_/¯'

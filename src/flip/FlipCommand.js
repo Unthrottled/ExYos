@@ -44,8 +44,8 @@ const getFlippedItem = item => {
   }
 };
 
-const actuallyParseArguments = argumentsToParse => {
-  const parsedArguments = argumentsToParse.split(" ");
+const actuallyParseArguments = flipArgumentToParse => {
+  const parsedArguments = flipArgumentToParse.split(" ");
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
@@ -69,14 +69,14 @@ const actuallyParseArguments = argumentsToParse => {
 
 const parseFlipArguments = flipArguments => {
   return Promise.resolve(flipArguments)
-    .then(arguments => {
-      if (arguments.indexOf('-') > -1) {
-        return actuallyParseArguments(arguments);
+    .then(flipArgument => {
+      if (flipArgument.indexOf('-') > -1) {
+        return actuallyParseArguments(flipArgument);
       } else {
         return {
           flippedItem: {
             type: PHRASE,
-            payload: arguments,
+            payload: flipArgument,
           },
           velocity: {
             type: NORMAL_VELOCITY
