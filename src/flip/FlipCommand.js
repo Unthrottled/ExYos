@@ -1,4 +1,4 @@
-const {YELLING, getFace} = require("../Faces");
+const {YELLING, RAGE, getFace} = require("../Faces");
 const {
   TABLE,
   PERSON,
@@ -40,7 +40,7 @@ const getFlippedItem = item => {
     case PERSON:
       return '/(.□ . \\)';
     case PHRASE:
-      return flipWord(item.payload);
+      return flipWord(item.payload.trim());
   }
 };
 
@@ -49,13 +49,19 @@ const actuallyParseArguments = flipArgumentToParse => {
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
+    } else if (currentString === '-rage') {
+      builtArguments.velocity = {type: FORCEFUL_VELOCITY};
+      builtArguments.face = {type: RAGE}
     } else if (currentString.startsWith('-')) {
       throw new CommandError(`Unknown Argument: ${currentString}`, 'Available Arguments: -table')
+    } else if(builtArguments.flippedItem.type === PHRASE){
+      builtArguments.flippedItem.payload += `${currentString} `
     }
     return builtArguments
   }, {
     flippedItem: {
-      type: TABLE
+      type: PHRASE,
+      payload: '',
     },
     velocity: {
       type: NORMAL_VELOCITY
