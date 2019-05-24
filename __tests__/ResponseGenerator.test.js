@@ -124,6 +124,24 @@ describe('ResponseGenerator', () => {
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
+    it('should return alarmed phrase flipping when told to flip phrase alarmed', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -alarmed Thanks Obama'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(text).toEqual('(╯◉Д◉)╯彡ɐɯɐqO sʞuɐɥ┴');
+      expect(response_type).toEqual("in_channel");
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
     it('should return raged phrase flipping when told to flip phrase ragefully (after phrase)', async () => {
       const headers = {
         'X-Slack-Request-Timestamp': 'aoeu'
@@ -133,6 +151,60 @@ describe('ResponseGenerator', () => {
         body: {
           ...BASE_REQUEST,
           text: 'flip Thanks Obama -rage'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(text).toEqual('(╯ಠ益ಠ)╯彡ɐɯɐqO sʞuɐɥ┴');
+      expect(response_type).toEqual("in_channel");
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return alarmed phrase flipping when told to flip phrase alarmed (after phrase)', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip Thanks Obama -alarmed'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(text).toEqual('(╯◉Д◉)╯彡ɐɯɐqO sʞuɐɥ┴');
+      expect(response_type).toEqual("in_channel");
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return alarmed phrase flipping when told to flip phrase ragefully and alarmed ', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -rage Thanks Obama -alarmed'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(text).toEqual('(╯◉Д◉)╯彡ɐɯɐqO sʞuɐɥ┴');
+      expect(response_type).toEqual("in_channel");
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return raged phrase flipping when told to flip phrase ragefully  and alarmed (after phrase)', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -alarmed Thanks Obama -rage'
         }
       };
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
@@ -157,6 +229,24 @@ describe('ResponseGenerator', () => {
       expect(attachments[0].text).toContain('<@U2147483697>');
       expect(response_type).toEqual("in_channel");
       expect(text).toEqual('(╯ಠ益ಠ)╯彡┻━┻');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
+    it('should return alarmed flipped table when told to flip table ragefully, alarmed, and a phrase', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          text: 'flip -table -alarmed Thanks Obama'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('(╯◉Д◉)╯彡┻━┻');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
@@ -388,7 +478,7 @@ describe('ResponseGenerator', () => {
         }
       };
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
-      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage');
+      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage, -alarmed');
       expect(response_type).toEqual("ephemeral");
       expect(text).toEqual('Unknown Argument: -loaded-god-complex-cock-it-and-pull-it');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
@@ -406,7 +496,7 @@ describe('ResponseGenerator', () => {
         }
       };
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
-      expect(attachments[0].text).toEqual('Available Arguments: -table');
+      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage');
       expect(response_type).toEqual("ephemeral");
       expect(text).toEqual('Unknown Argument: -wee-wee-weapon');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');

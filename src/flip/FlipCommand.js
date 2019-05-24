@@ -1,4 +1,4 @@
-const {YELLING, RAGE, getFace} = require("../Faces");
+const {YELLING, RAGE, ALARMED, getFace} = require("../Faces");
 const {
   TABLE,
   PERSON,
@@ -44,7 +44,7 @@ const getFlippedItem = item => {
   }
 };
 
-const AVAILABLE_COMMANDS = ['-table', '-rage'];
+const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed'];
 
 const actuallyParseArguments = flipArgumentToParse => {
   const parsedArguments = flipArgumentToParse.split(" ");
@@ -54,6 +54,9 @@ const actuallyParseArguments = flipArgumentToParse => {
     } else if (currentString === '-rage') {
       builtArguments.velocity = {type: FORCEFUL_VELOCITY};
       builtArguments.face = {type: RAGE}
+    } else if (currentString === '-alarmed') {
+      builtArguments.velocity = {type: FORCEFUL_VELOCITY};
+      builtArguments.face = {type: ALARMED}
     } else if (currentString.startsWith('-')) {
       throw new CommandError(`Unknown Argument: ${currentString}`, `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`)
     } else if(builtArguments.flippedItem.type === PHRASE){
