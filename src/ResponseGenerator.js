@@ -1,16 +1,19 @@
 const {flipCommand, unFlipCommand} = require('./flip/FlipCommands');
 const {suddenlyCommand} = require('./suddenly/SuddenlyCommand');
+const {signCommand} = require('./sign/SignCommand');
 const CommandError = require('./CommandError');
 const {isSlackRequest} = require('./Security');
 
 const FLIP = 'flip';
 const UNFLIP = 'unflip';
 const SUDDENLY = 'suddenly';
+const SIGN = 'sign';
 
 const commands = [
   FLIP,
   UNFLIP,
   SUDDENLY,
+  SIGN
 ];
 
 const extractCommand = fullCommand => {
@@ -34,6 +37,8 @@ const getResponse = requestBody => {
       return unFlipCommand(userArguments);
     case SUDDENLY:
       return suddenlyCommand(userArguments);
+    case SIGN:
+      return signCommand(userArguments);
     default:
       return Promise.reject(CommandError());
   }
