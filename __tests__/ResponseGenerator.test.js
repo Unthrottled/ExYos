@@ -17,7 +17,7 @@ const BASE_REQUEST = {
 };
 
 describe('ResponseGenerator', () => {
-  describe('generateResponse', () => {
+  describe('Flip Commands', () => {
 
     it('should reject when not given a slack request', () => {
       const headers = {};
@@ -88,60 +88,6 @@ describe('ResponseGenerator', () => {
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
-    it('should return suddenly character when given default suddenly', async () => {
-      const headers = {
-        'X-Slack-Request-Timestamp': 'aoeu'
-      };
-      const request = {
-        header: header => headers[header],
-        body: {
-          ...BASE_REQUEST,
-          text: 'suddenly'
-        }
-      };
-      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
-      expect(attachments[0].text).toContain('<@U2147483697>');
-      expect(response_type).toEqual("in_channel");
-      expect(text).toEqual(`
-⊂_ヽ
-　 ＼＼ ＿
-　　 ＼(　•_•) 
-　　　 <　⌒ヽ 
-　　　/ 　 へ＼ 
-　　 /　　/　＼＼ 
-　　 ﾚ　ノ　　 ヽ_つ 
-　　/　/ 
-　 /　/| 
-　(　(ヽ 
-　|　|、＼
-　| 丿 ＼ ⌒)
-　| |　　) /
-\`ノ )　 Lﾉ
-`);
-      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
-    });
-
-    it('should return sign bunny when given default sign', async () => {
-      const headers = {
-        'X-Slack-Request-Timestamp': 'aoeu'
-      };
-      const request = {
-        header: header => headers[header],
-        body: {
-          ...BASE_REQUEST,
-          text: 'sign'
-        }
-      };
-      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
-      expect(attachments[0].text).toContain('<@U2147483697>');
-      expect(response_type).toEqual("in_channel");
-      expect(text).toEqual(
-`(\\__/) ||
-,(•ㅅ•) ||
-,/ 　 づ
-`);
-      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
-    });
 
     it('should return flipped table when told to flip table', async () => {
       const headers = {
