@@ -19,7 +19,7 @@ const commands = [
 const extractCommand = fullCommand => {
   const firstSpace = fullCommand.indexOf(' ');
   const command = firstSpace > -1 ?  fullCommand.substring(0, firstSpace) : fullCommand;
-  const userArguments = fullCommand.substring(firstSpace + 1);
+  const userArguments = firstSpace > -1 ? fullCommand.substring(firstSpace + 1) : '';
   return {
     command,
     userArguments

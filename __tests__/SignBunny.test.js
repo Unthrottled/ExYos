@@ -32,7 +32,7 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
-      `(\\__/) ||
+`(\\__/) ||
 ,(•ㅅ•) ||
 ,/ 　 づ
 `);
