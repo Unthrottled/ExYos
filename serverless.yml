@@ -6,6 +6,7 @@
 
 plugins:
   - serverless-offline
+  - serverless-webpack
 
 # The `service` block is the name of the service
 service: serverless-exyos
