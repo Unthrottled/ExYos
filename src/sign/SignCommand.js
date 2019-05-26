@@ -97,12 +97,15 @@ const renderSign = phrase => {
     sign
   };
 };
-
+const bunnyPostCenter = 8;
 const renderSignBunny = phrase => {
   const {sign} = renderSign(phrase);
   const signLength = sign.indexOf('\n');
-  console.log(signLength);
-  const bunny = signPieces.join();
+  const bunnyCenteringPadding = Math.floor(signLength/2) - bunnyPostCenter;
+  const bunnyPadding = Array(bunnyCenteringPadding).fill().map(()=>' ').join('');
+  const bunny = signPieces
+    .map(bunnyPart => `${bunnyPadding}${bunnyPart}`)
+    .join();
   const signBunny =
     `${sign}
 ${bunny}`;
