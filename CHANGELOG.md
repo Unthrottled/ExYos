@@ -1,6 +1,11 @@
 Changelog
 ---
 
+## 1.1.0
+
+- Non-Functional changes:
+    - Typescript Support
+
 ## 1.0.0
 - MVP Release!
 - Added Suddenly Expressions

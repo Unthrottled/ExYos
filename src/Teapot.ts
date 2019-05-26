@@ -1,5 +1,4 @@
-
-module.exports.default = `
+const teaPot = `
                                                 /
                                                /
                                xxX###xx       /
@@ -20,3 +19,5 @@ module.exports.default = `
                                /
                               /
 `;
+
+export default teaPot;

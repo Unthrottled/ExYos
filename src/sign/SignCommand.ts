@@ -1,9 +1,10 @@
-const {signPieces} = require('./Sign');
+import {signPieces} from "./Sign";
+import {Command} from "../Command";
 
 const SIGN_PADDING = 2;
 const defaultPhrase = 'Turn down for what?';
 
-const padding = Array(SIGN_PADDING).fill().map(() => ' ').join('');
+const padding = Array(SIGN_PADDING).fill('').map(() => ' ').join('');
 const signStartPadding = '|' + padding;
 const signWidths = [
   {
@@ -79,12 +80,12 @@ const renderSign = phrase => {
 
   const {sentences, signWidth} = constructSentences(max, words, length);
   const paddedSignTopper = Array(signWidth + SIGN_PADDING * 2)
-    .fill().map(() => '_').join('');
+    .fill('').map(() => '_').join('');
   const maxSentenceLength = paddedSignTopper.length;
   const signSegments = sentences.map(sentence => {
     const sentenceLength = sentence.length + signStartPadding.length;
     const endPaddingLength = maxSentenceLength - sentenceLength - 1;
-    const endPadding = Array(endPaddingLength).fill().map(() => ' ').join('');
+    const endPadding = Array(endPaddingLength).fill('').map(() => ' ').join('');
     return `${signStartPadding}${sentence}${endPadding}|`;
   });
   const sign = [
@@ -102,7 +103,7 @@ const renderSignBunny = phrase => {
   const {sign} = renderSign(phrase);
   const signLength = sign.indexOf('\n');
   const bunnyCenteringPadding = Math.floor(signLength/2) - bunnyPostCenter;
-  const bunnyPadding = Array(bunnyCenteringPadding).fill().map(()=>' ').join('');
+  const bunnyPadding = Array(bunnyCenteringPadding).fill('').map(()=>' ').join('');
   const bunny = signPieces
     .map(bunnyPart => `${bunnyPadding}${bunnyPart}`)
     .join('');
@@ -112,11 +113,7 @@ ${bunny}\`\`\``;
   return Promise.resolve(signBunny)
 };
 
-const signCommand = userArguments => {
+export const signCommand: Command = userArguments => {
   const phrase = userArguments || defaultPhrase;
   return renderSignBunny(phrase.toLocaleUpperCase());
-};
-
-module.exports = {
-  signCommand
 };
