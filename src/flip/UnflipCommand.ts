@@ -1,6 +1,7 @@
 import {ALARMED, getFace, RAGE, SOLEMN} from "../Faces";
 import CommandError from "../CommandError";
 import {PERSON, PHRASE, TABLE} from "./FlipableItems";
+import {Command} from "../Command";
 
 const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
 
@@ -80,7 +81,7 @@ const extractUnFlipExpressionParts = flipArguments => {
 };
 
 
-export const unFlipCommand = flipArguments => {
+export const unFlipCommand: Command = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)
     .then(({face, unFlippedItem}) => `${unFlippedItem}ノ(${face}ノ)`);
 };

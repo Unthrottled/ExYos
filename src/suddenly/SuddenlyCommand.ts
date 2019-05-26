@@ -1,4 +1,5 @@
 import {suddenlyPieces} from "./Suddenly";
+import {Command} from "../Command";
 
 const defaultPhrase = '';
 
@@ -8,7 +9,7 @@ const renderSuddenly = phrase => {
     .join('\n'));
 };
 
-export const suddenlyCommand = userArguments => {
+export const suddenlyCommand: Command = userArguments => {
   const phrase = userArguments || defaultPhrase;
   return renderSuddenly(phrase.toLocaleUpperCase());
 };

@@ -1,4 +1,5 @@
 import {signPieces} from "./Sign";
+import {Command} from "../Command";
 
 const SIGN_PADDING = 2;
 const defaultPhrase = 'Turn down for what?';
@@ -112,7 +113,7 @@ ${bunny}\`\`\``;
   return Promise.resolve(signBunny)
 };
 
-export const signCommand = userArguments => {
+export const signCommand: Command = userArguments => {
   const phrase = userArguments || defaultPhrase;
   return renderSignBunny(phrase.toLocaleUpperCase());
 };
