@@ -1,4 +1,4 @@
-const {suddenlyPieces} = require('./Suddenly');
+import {suddenlyPieces} from "./Suddenly";
 
 const defaultPhrase = '';
 
@@ -8,11 +8,8 @@ const renderSuddenly = phrase => {
     .join('\n'));
 };
 
-const suddenlyCommand = userArguments => {
+export const suddenlyCommand = userArguments => {
   const phrase = userArguments || defaultPhrase;
   return renderSuddenly(phrase.toLocaleUpperCase());
 };
 
-module.exports = {
-  suddenlyCommand
-};

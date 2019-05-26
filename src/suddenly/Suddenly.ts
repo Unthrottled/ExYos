@@ -1,4 +1,4 @@
-const suddenlyPieces = [
+export const suddenlyPieces = [
   `⊂_ヽ
 　 ＼＼ ＿
   　　 ＼(　•_•)`,
@@ -14,6 +14,3 @@ const suddenlyPieces = [
   `　| |　　) /`,
   `\`ノ )　 Lﾉ
 `];
-module.exports = {
-  suddenlyPieces
-};
