@@ -85,4 +85,3 @@ export const unFlipCommand: Command = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)
     .then(({face, unFlippedItem}) => `${unFlippedItem}ノ(${face}ノ)`);
 };
-

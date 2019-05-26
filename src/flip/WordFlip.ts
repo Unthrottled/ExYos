@@ -5,4 +5,3 @@ export const flipWord = (workToFlip) => {
   return characters.map(character => upsideDownDictionary[character] || upsideDownDictionary[character.toLocaleLowerCase()] || character)
     .reduce((message, character)=> character + message, '');
 };
-

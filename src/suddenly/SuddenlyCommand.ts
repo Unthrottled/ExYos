@@ -13,4 +13,3 @@ export const suddenlyCommand: Command = userArguments => {
   const phrase = userArguments || defaultPhrase;
   return renderSuddenly(phrase.toLocaleUpperCase());
 };
-
