@@ -7,7 +7,7 @@ const sendDelayedResponse = (slackUrl, exyosResponse) =>
     headers: {'Content-type': 'application/json'},
     timeout: 1000,
   }).catch(error => {
-    console.error('Unable to send response to Slack for raisins', error);
+    // console.error('Unable to send response to Slack for raisins', error);
   });
 
 const processRequest = request => {

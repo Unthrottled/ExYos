@@ -1,11 +1,8 @@
-const {YELLING, RAGE, ALARMED, getFace} = require("../Faces");
-const {
-  TABLE,
-  PERSON,
-  PHRASE,
-} = require('./FlipableItems');
-const {flipWord} = require('./WordFlip');
-const CommandError = require('../CommandError');
+import {PERSON, PHRASE, TABLE} from "./FlipableItems";
+import {flipWord} from "./WordFlip";
+import {ALARMED, getFace, RAGE, YELLING} from "../Faces";
+import {Command} from "../Command";
+import CommandError from "../CommandError";
 
 const extractFlipExpressionParts = flipArguments => {
   return parseFlipArguments(flipArguments)
@@ -47,7 +44,7 @@ const getFlippedItem = item => {
 const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
 
 function getAvailableArgumentsString() {
-  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`;
+  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
 }
 
 const actuallyParseArguments = flipArgumentToParse => {
@@ -106,12 +103,7 @@ const parseFlipArguments = flipArguments => {
     });
 };
 
-const flipCommand = flipArguments => {
+export const flipCommand: Command = flipArguments => {
   return extractFlipExpressionParts(flipArguments)
     .then(({face, velocity, flippedItem}) => `(╯${face})╯${velocity}${flippedItem}`);
-};
-
-
-module.exports = {
-  flipCommand
 };

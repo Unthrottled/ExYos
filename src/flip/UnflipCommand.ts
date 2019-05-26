@@ -1,15 +1,11 @@
-const {SOLEMN, RAGE, ALARMED, getFace} = require("../Faces");
-const {
-  TABLE,
-  PERSON,
-  PHRASE,
-} = require('./FlipableItems');
-const CommandError = require('../CommandError');
+import {ALARMED, getFace, RAGE, SOLEMN} from "../Faces";
+import CommandError from "../CommandError";
+import {PERSON, PHRASE, TABLE} from "./FlipableItems";
 
 const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
 
 function getAvailableArgumentsString() {
-  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trimRight()}`;
+  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
 }
 
 const actuallyParseUnFlipArguments = unflipArgumentToParse => {
@@ -84,11 +80,8 @@ const extractUnFlipExpressionParts = flipArguments => {
 };
 
 
-const unFlipCommand = flipArguments => {
+export const unFlipCommand = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)
     .then(({face, unFlippedItem}) => `${unFlippedItem}ノ(${face}ノ)`);
 };
 
-module.exports = {
-  unFlipCommand
-};

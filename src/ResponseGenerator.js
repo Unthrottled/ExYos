@@ -1,4 +1,6 @@
-const {flipCommand, unFlipCommand} = require('./flip/FlipCommands');
+import {flipCommand} from "./flip/FlipCommand";
+import {unFlipCommand} from "./flip/UnflipCommand";
+
 const {suddenlyCommand} = require('./suddenly/SuddenlyCommand');
 const {signCommand} = require('./sign/SignCommand');
 const CommandError = require('./CommandError');
