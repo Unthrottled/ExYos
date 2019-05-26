@@ -31,8 +31,8 @@ describe('Suddenly', () => {
     const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
-    expect(text).toEqual(`
-⊂_ヽ
+    expect(text).toEqual(
+`⊂_ヽ
 　 ＼＼ ＿
 　　 ＼(　•_•) 
 　　　 <　⌒ヽ 

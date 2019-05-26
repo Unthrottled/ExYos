@@ -109,7 +109,6 @@ const renderSignBunny = phrase => {
   const signBunny =
     `\`\`\`${sign}
 ${bunny}\`\`\``;
-  console.log(signBunny);
   return Promise.resolve(signBunny)
 };
 

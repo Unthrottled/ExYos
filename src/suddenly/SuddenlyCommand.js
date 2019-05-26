@@ -1,7 +1,14 @@
-const suddenly = require('./Suddenly');
+const {suddenlyPieces} = require('./Suddenly');
+
+const defaultPhrase = '';
+
+const renderSuddenly = phrase => {
+  return Promise.resolve(suddenlyPieces.join(''));
+}
 
 const suddenlyCommand = userArguments => {
-  return Promise.resolve(suddenly);
+  const phrase = userArguments || defaultPhrase;
+  return renderSuddenly(phrase.toLocaleUpperCase());
 };
 
 module.exports = {
