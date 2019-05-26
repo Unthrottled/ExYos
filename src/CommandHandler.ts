@@ -1,13 +1,13 @@
-const axios = require('axios');
-const { generateResponse } = require('./ResponseGenerator');
-const teapot = require('./Teapot').default;
+import axios from "axios";
+import {generateResponse} from "./ResponseGenerator";
+import teapot from "./Teapot";
 
 const sendDelayedResponse = (slackUrl, exyosResponse) =>
   axios.post(slackUrl, exyosResponse, {
     headers: {'Content-type': 'application/json'},
     timeout: 1000,
   }).catch(error => {
-    // console.error('Unable to send response to Slack for raisins', error);
+    console.error('Unable to send response to Slack for raisins', error);
   });
 
 const processRequest = request => {
@@ -26,4 +26,4 @@ const handler = (request, response) => {
     });
 };
 
-module.exports = handler;
+export default handler

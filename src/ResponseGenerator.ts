@@ -1,9 +1,9 @@
 import {flipCommand} from "./flip/FlipCommand";
 import {unFlipCommand} from "./flip/UnflipCommand";
+import {suddenlyCommand} from "./suddenly/SuddenlyCommand";
+import {signCommand} from "./sign/SignCommand";
+import CommandError from "./CommandError";
 
-const {suddenlyCommand} = require('./suddenly/SuddenlyCommand');
-const {signCommand} = require('./sign/SignCommand');
-const CommandError = require('./CommandError');
 const {isSlackRequest} = require('./Security');
 
 const FLIP = 'flip';
@@ -42,7 +42,7 @@ const getResponse = requestBody => {
     case SIGN:
       return signCommand(userArguments);
     default:
-      return Promise.reject(CommandError());
+      return Promise.reject(new CommandError());
   }
 };
 
@@ -93,7 +93,7 @@ const createCommandResponse = slackRequest => {
 
 const getResponseUrl = requestBody => (requestBody.response_url || '').trim();
 
-function generateResponse(request) {
+export function generateResponse(request) {
   if (isSlackRequest(request)) {
     const requestBody = request.body;
     return createCommandResponse(requestBody)
@@ -105,7 +105,3 @@ function generateResponse(request) {
     return Promise.reject("Not a Slack Request");
   }
 }
-
-module.exports = {
-  generateResponse
-};

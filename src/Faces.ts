@@ -1,12 +1,12 @@
-const YELLING = 'YELLING';
-const LOOK = 'LOOK';
-const RAGE = 'RAGE';
-const ALARMED = 'ALARMED';
-const LENNY = 'LENNY';
-const U_CANT_BE_SRS = 'U_CANT_BE_SRS';
-const SOLEMN = 'SOLEMN';
+export const YELLING = 'YELLING';
+export const LOOK = 'LOOK';
+export const RAGE = 'RAGE';
+export const ALARMED = 'ALARMED';
+export const LENNY = 'LENNY';
+export const U_CANT_BE_SRS = 'U_CANT_BE_SRS';
+export const SOLEMN = 'SOLEMN';
 
-const getFace = faceType => {
+export const getFace = faceType => {
   switch (faceType) {
     case YELLING:
       return '°□°';
@@ -23,15 +23,4 @@ const getFace = faceType => {
     case SOLEMN:
       return 'º _ º';
   }
-};
-
-module.exports = {
-  YELLING,
-  LOOK,
-  RAGE,
-  ALARMED,
-  LENNY,
-  U_CANT_BE_SRS,
-  SOLEMN,
-  getFace,
 };
