@@ -27,33 +27,33 @@ const signWidths = [
     value: 100,
   }
 ];
-const findMaxSignWidth = phraseLength=>
-signWidths.find(signWidth => signWidth.predicate(phraseLength)).value;
+const findMaxSignWidth = phraseLength =>
+  signWidths.find(signWidth => signWidth.predicate(phraseLength)).value;
 
 const constructSentences = (max, words, length) => {
-  //todo: long words?
   const signWidth = findMaxSignWidth(length);
-  const {sentences, currentSentence} = words.reduce((accum, word) => {
-    const wordLength = word.length;
-    const newSentenceLength = accum.currentSentence.length + wordLength;
-    if(newSentenceLength > signWidth){
-      const newSentence = accum.currentSentence.trimLeft();
-      accum.sentences.push(newSentence);
-      const sentenceLength = newSentence.length;
-      if(sentenceLength > accum.maxSentenceLength) {
-        accum.maxSentenceLength = sentenceLength
+  const {sentences, currentSentence} =
+    words.reduce((accum, word) => {
+      const wordLength = word.length;
+      const newSentenceLength = accum.currentSentence.length + wordLength;
+      if (newSentenceLength > signWidth) {
+        const newSentence = accum.currentSentence.trimLeft();
+        accum.sentences.push(newSentence);
+        const sentenceLength = newSentence.length;
+        if (sentenceLength > accum.maxSentenceLength) {
+          accum.maxSentenceLength = sentenceLength
+        }
+        accum.currentSentence = ''
       }
-      accum.currentSentence = ''
-    }
 
-    accum.currentSentence += ` ${word}`;
+      accum.currentSentence += ` ${word}`;
 
-    return accum;
-  }, {
-    currentSentence: '',
-    maxSentenceLength: 0,
-    sentences: [],
-  });
+      return accum;
+    }, {
+      currentSentence: '',
+      maxSentenceLength: 0,
+      sentences: [],
+    });
   sentences.push(currentSentence.trimLeft());
   return {
     sentences,
@@ -61,37 +61,36 @@ const constructSentences = (max, words, length) => {
   };
 };
 
-const spaceToTopperRatio = 1.7;
-
 const renderSign = phrase => {
-  const {max, words, length} = phrase.split(' ').reduce((accum, word) => {
-    const wordLength = word.length;
-    if (wordLength > accum.max) {
-      accum.max = wordLength
-    }
-    accum.words.push(word);
-    accum.length += wordLength;
-    return accum;
-  }, {
-    max: 0,
-    length: 0,
-    words: []
-  });
+  const {max, words, length} =
+    phrase.split(' ').reduce((accum, word) => {
+      const wordLength = word.length;
+      if (wordLength > accum.max) {
+        accum.max = wordLength
+      }
+      accum.words.push(word);
+      accum.length += wordLength;
+      return accum;
+    }, {
+      max: 0,
+      length: 0,
+      words: []
+    });
 
-  const {sentences, signWidth } = constructSentences(max, words, length);
-  const signTopperLength = Math.ceil(signWidth / spaceToTopperRatio);
-  const signTopper = Array(signTopperLength).fill().map(() => '￣').join('');
-  const maxSentenceLength = signTopperLength*spaceToTopperRatio;
+  const {sentences, signWidth} = constructSentences(max, words, length);
+  const paddedSignTopper = Array(signWidth + SIGN_PADDING * 2)
+    .fill().map(() => '_').join('');
+  const maxSentenceLength = paddedSignTopper.length;
   const signSegments = sentences.map(sentence => {
-    const sentenceLength = sentence.length  + signStartPadding.length;
+    const sentenceLength = sentence.length + signStartPadding.length;
     const endPaddingLength = Math.ceil(maxSentenceLength - sentenceLength - 1);
     const endPadding = Array(endPaddingLength).fill().map(() => ' ').join('');
     return `${signStartPadding}${sentence}${endPadding}|`;
   });
   const sign = [
-    signTopper,
+    paddedSignTopper,
     ...signSegments,
-    signTopper
+    paddedSignTopper
   ].join('\n');
 
   return {
