@@ -1,6 +1,12 @@
 Changelog
 ---
 
+## 1.0.0
+- MVP Release!
+- Added Suddenly Expressions
+    - `/exyos suddenly`
+    - `/exyos suddenly Swagger`
+
 ## 0.5.0
 - Better Help documentation
 
