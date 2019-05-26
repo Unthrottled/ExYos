@@ -32,10 +32,14 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
-`(\\__/) ||
-,(•ㅅ•) ||
-,/ 　 づ
-`);
+      `\`\`\`___________________
+|  TURN DOWN FOR  |
+|  WHAT?          |
+___________________
+ (\\__/) ||
+ (•ㅅ•) ||
+ / 　 づ
+\`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
   it('should return sign bunny when given Short Phrase', async () => {
@@ -53,10 +57,14 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
-`(\\__/) ||
-,(•ㅅ•) ||
-,/ 　 づ
-`);
+      `\`\`\`_____________________________
+|  I FEEL LIKE I AM TAKING  |
+|  CRAZY PILLS              |
+_____________________________
+      (\\__/) ||
+      (•ㅅ•) ||
+      / 　 づ
+\`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
   it('should return sign bunny when given really long Phrase', async () => {
@@ -74,10 +82,21 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
-`(\\__/) ||
-,(•ㅅ•) ||
-,/ 　 づ
-`);
+      `\`\`\`________________________________________________________________________________________________________
+|  LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. CRAS IACULIS, NISI ET ACCUMSAN TRISTIQUE,  |
+|  DIAM NISI FINIBUS LACUS, NEC ELEIFEND ELIT NIBH EU EX. DONEC ULTRICES ET ELIT AT INTERDUM. NUNC     |
+|  TORTOR MAGNA, AUCTOR NEC PELLENTESQUE AC, ALIQUET EGET NISL. PRAESENT EGET METUS UT QUAM LAOREET    |
+|  IACULIS VEL SIT AMET LECTUS. ETIAM ULTRICIES EX EU NEQUE PELLENTESQUE, VEL BLANDIT METUS CONVALLIS. |
+|  PHASELLUS TURPIS ELIT, ORNARE A MATTIS AT, PHARETRA VITAE DIAM. INTEGER EUISMOD NUNC EX, EGET       |
+|  CONSECTETUR SEM FRINGILLA EU. AENEAN AC LEO QUIS TELLUS PLACERAT PORTA. INTEGER RHONCUS ENIM EST, UT|
+|  MOLLIS ORCI MALESUADA VITAE. UT ID ARCU RUTRUM, MAXIMUS LACUS QUIS, PORTTITOR TORTOR. SUSPENDISSE IN|
+|  RISUS NEQUE. PELLENTESQUE HABITANT MORBI TRISTIQUE SENECTUS ET NETUS ET MALESUADA FAMES AC TURPIS   |
+|  EGESTAS.                                                                                            |
+________________________________________________________________________________________________________
+                                            (\\__/) ||
+                                            (•ㅅ•) ||
+                                            / 　 づ
+\`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
   it('should return sign bunny when given really long Phrase', async () => {
@@ -95,10 +114,14 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
-`(\\__/) ||
-,(•ㅅ•) ||
-,/ 　 づ
-`);
+      `\`\`\`_____________________________
+|  DO YOU WANT ANTS? BECAUSE|
+|  THAT IS HOW YOU GET ANTS.|
+_____________________________
+      (\\__/) ||
+      (•ㅅ•) ||
+      / 　 づ
+\`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
 });

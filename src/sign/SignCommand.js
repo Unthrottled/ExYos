@@ -1,7 +1,7 @@
 const {signPieces} = require('./Sign');
 
 const SIGN_PADDING = 2;
-const defaultPhrase = 'hail satan';
+const defaultPhrase = 'Turn down for what?';
 
 const padding = Array(SIGN_PADDING).fill().map(() => ' ').join('');
 const signStartPadding = '|' + padding;
@@ -83,7 +83,7 @@ const renderSign = phrase => {
   const maxSentenceLength = paddedSignTopper.length;
   const signSegments = sentences.map(sentence => {
     const sentenceLength = sentence.length + signStartPadding.length;
-    const endPaddingLength = Math.ceil(maxSentenceLength - sentenceLength - 1);
+    const endPaddingLength = maxSentenceLength - sentenceLength - 1;
     const endPadding = Array(endPaddingLength).fill().map(() => ' ').join('');
     return `${signStartPadding}${sentence}${endPadding}|`;
   });
@@ -105,10 +105,10 @@ const renderSignBunny = phrase => {
   const bunnyPadding = Array(bunnyCenteringPadding).fill().map(()=>' ').join('');
   const bunny = signPieces
     .map(bunnyPart => `${bunnyPadding}${bunnyPart}`)
-    .join();
+    .join('');
   const signBunny =
-    `${sign}
-${bunny}`;
+    `\`\`\`${sign}
+${bunny}\`\`\``;
   console.log(signBunny);
   return Promise.resolve(signBunny)
 };

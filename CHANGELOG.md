@@ -4,6 +4,10 @@ Changelog
 ## 0.5.0
 - Better Help documentation
 
+- Added Sign Bunny expressions!
+    - `/exyos sign`
+    - `/exyos sign Dont Dead Open Inside`
+
 - Added more expressiveness functionality:
 
     - `/exyos unflip -alarmed`
