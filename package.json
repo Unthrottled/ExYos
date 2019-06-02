@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "sls offline start",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "tslint src/**/*.ts"
   },
   "devDependencies": {
