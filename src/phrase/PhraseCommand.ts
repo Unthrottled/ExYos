@@ -27,10 +27,13 @@ const validateFont = (font: string): string =>{
 };
 
 const fontPrefix = '-font="';
+const otherFontPrefix = '-f="';
 
 function getAvailableFonts() {
     return fonts.join(', ');
 }
+
+const isFontCommand = part => part.startsWith(fontPrefix) || part.startsWith(otherFontPrefix);
 
 const constructFontArguments = (userArguments: string): Promise<FontArguments> => {
     const parsedArguments = userArguments.split(' ');
@@ -39,11 +42,12 @@ const constructFontArguments = (userArguments: string): Promise<FontArguments> =
             throw new CommandError(`Phrase Usage`,
                 `\`/exyos phrase Phrase Here\`
 \`/exyos phrase -font="Def Leppard" Phrase Here\`
+\`/exyos phrase -f="Def Leppard" Phrase Here\`
 Available Fonts (Case-Sensitive): ${getAvailableFonts()}`);
-        } else if (part.startsWith(fontPrefix) && part.endsWith('"')) {
-            accum.font = validateFont(part.substring(fontPrefix.length, part.length - 1));
-        } else if (part.startsWith(fontPrefix) && !part.endsWith('"')) {
-            accum.buildingFont = part.substring(fontPrefix.length);
+        } else if (isFontCommand(part) && part.endsWith('"')) {
+            accum.font = validateFont(part.substring(part.indexOf('="')+2, part.length - 1));
+        } else if (isFontCommand(part) && !part.endsWith('"')) {
+            accum.buildingFont = part.substring(part.indexOf('="')+2);
         } else if (accum.buildingFont) {
             if (part.endsWith('"')) {
                 const builtFont = `${accum.buildingFont} ${part.substr(0, part.length - 1)}`;
