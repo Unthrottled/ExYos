@@ -37,8 +37,8 @@ const constructFontArguments = (userArguments: string): Promise<FontArguments> =
     const {phrase, buildingFont, font} = parsedArguments.reduce((accum, part) => {
         if (part === '-help') {
             throw new CommandError(`Phrase Usage`,
-                `/exyos phrase Phrase Here
-/exyos phrase -font="Def Leppard" Phrase Here
+                `\`/exyos phrase Phrase Here\`
+\`/exyos phrase -font="Def Leppard" Phrase Here\`
 Available Fonts (Case-Sensitive): ${getAvailableFonts()}`);
         } else if (part.startsWith(fontPrefix) && part.endsWith('"')) {
             accum.font = validateFont(part.substr(fontPrefix.length, part.length - 1));
