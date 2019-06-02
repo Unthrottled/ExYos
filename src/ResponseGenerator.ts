@@ -2,6 +2,7 @@ import {flipCommand} from "./flip/FlipCommand";
 import {unFlipCommand} from "./flip/UnflipCommand";
 import {suddenlyCommand} from "./suddenly/SuddenlyCommand";
 import {signCommand} from "./sign/SignCommand";
+import {phraseCommand} from "./phrase/PhraseCommand";
 import CommandError from "./CommandError";
 
 const {isSlackRequest} = require('./Security');
@@ -10,12 +11,14 @@ const FLIP = 'flip';
 const UNFLIP = 'unflip';
 const SUDDENLY = 'suddenly';
 const SIGN = 'sign';
+const PHRASE = 'phrase';
 
 const commands = [
   FLIP,
   UNFLIP,
   SUDDENLY,
-  SIGN
+  SIGN,
+  PHRASE,
 ];
 
 const extractCommand = fullCommand => {
@@ -41,6 +44,8 @@ const getResponse = requestBody => {
       return suddenlyCommand(userArguments);
     case SIGN:
       return signCommand(userArguments);
+    case PHRASE:
+      return phraseCommand(userArguments);
     default:
       return Promise.reject(new CommandError());
   }
@@ -63,21 +68,27 @@ const createCommandResponse = slackRequest => {
         ],
         "response_type": 'in_channel',
       }))
-      .catch(({failureResponse, tip}) => ({
-        "text": failureResponse,
-        "attachments": [
-          ...(tip ? [
-            {
-              "text": tip,
-            }
-          ] : [
-            {
-              "text": `Available Commands: ${commands.join(", ")}`,
-            }
-          ])
-        ],
-        "response_type": "ephemeral",
-      }))
+      .catch((error) => {
+        if(!(error instanceof CommandError)) {
+          console.error(error);
+        }
+        const {failureResponse, tip} = error;
+        return ({
+          "text": failureResponse,
+          "attachments": [
+            ...(tip ? [
+              {
+                "text": tip,
+              }
+            ] : [
+              {
+                "text": `Available Commands: ${commands.join(", ")}`,
+              }
+            ])
+          ],
+          "response_type": "ephemeral",
+        });
+      })
   } else {
     return Promise.resolve({
       "text": `Usage: <Command> <Arguments>`,

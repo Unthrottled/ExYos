@@ -1,6 +1,6 @@
 {
   "name": "exyos",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Express Yourself Slack Slash Command",
   "main": "src/index.ts",
   "repository": "git@github.com:cyclic-reference/ExYos.git",
@@ -8,14 +8,15 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.0",
+    "figlet": "^1.2.3",
     "serverless-http": "^2.0.2"
   },
   "scripts": {
     "start": "sls offline start",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "tslint src/**/*.ts"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@types/node": "^12.0.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
+    "copy-webpack-plugin": "^5.0.3",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.3",

@@ -46,7 +46,7 @@ describe('ResponseGenerator', () => {
       const result = generateResponse(request);
       return expect(result).resolves.toEqual({
         "exyosResponse": {
-          "attachments": [{"text": "Available Commands: flip, unflip, suddenly, sign"}],
+          "attachments": [{"text": "Available Commands: flip, unflip, suddenly, sign, phrase"}],
           "response_type": "ephemeral",
           "text": "Usage: <Command> <Arguments>"
         }, "slackUrl": "https://hooks.slack.com/commands/1234/5678"

@@ -4,11 +4,11 @@ import teapot from "./Teapot";
 
 const sendDelayedResponse = (slackUrl, exyosResponse) =>
   axios.post(slackUrl, exyosResponse, {
-    headers: {'Content-type': 'application/json'},
-    timeout: 1000,
-  }).catch(error => {
-    console.error('Unable to send response to Slack for raisins', error);
-  });
+        headers: {'Content-type': 'application/json'},
+        timeout: 1000,
+    }).catch(error => {
+        console.error('Unable to send response to Slack for raisins', error);
+    });
 
 const processRequest = request => {
   return generateResponse(request)
