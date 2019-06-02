@@ -1,20 +1,32 @@
-const figlet = require('figlet')
+const figlet = require('figlet');
 import {Command} from "../Command";
 
+type FontArguments = {
+    font?: string,
+    phrase: string,
+}
+
+const extractArguments = (userArguments: string): Promise<FontArguments> => {
+    return Promise.resolve({
+        phrase: userArguments
+    });
+};
+
 export const phraseCommand: Command = userArguments => {
-        return new Promise((resolve, reject) => {
-            figlet.text(userArguments,{
-                font: 'Ghost',
+    return extractArguments(userArguments).then(({font, phrase}) =>
+        new Promise((resolve, reject) => {
+            figlet.text(phrase, {
+                ...(font ? {font} : {}),
                 horizontalLayout: 'default',
                 verticalLayout: 'default'
             }, (error, translatedPhrase) => {
-                console.warn('bustin makes me feel good')
                 if (error) {
-                    console.error(error)
-                    reject(error)
+                    console.error(error);
+                    reject(error);
                 } else {
-                    resolve(translatedPhrase)
+                    resolve(translatedPhrase);
                 }
-            })
-        });
-}
+            });
+        }))
+        .then(phrase => `\`\`\`${phrase}\`\`\``);
+};
