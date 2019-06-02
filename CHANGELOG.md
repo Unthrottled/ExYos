@@ -4,6 +4,7 @@ Changelog
 - ASCII Art Phrases
     - `/exyos phrase Memes`
     - `/exyos phrase -font="Def Leppard" Def Leppard`
+    - `/exyos phrase -f="Def Leppard" Def Leppard`
     - `/exyos phrase -help`
         - Gives you a list of all available fonts.
 
