@@ -6,10 +6,47 @@ type FontArguments = {
     phrase: string,
 }
 
-const extractArguments = (userArguments: string): Promise<FontArguments> => {
-    return Promise.resolve({
-        phrase: userArguments
+const fontPrefix = '-font="';
+const extractFontArguments = (userArguments: string): Promise<FontArguments> =>{
+    const parsedArguments = userArguments.split(' ');
+    const {phrase, buildingFont, font} = parsedArguments.reduce((accum, part)=>{
+        if(part.startsWith(fontPrefix)){
+            accum.buildingFont = part.substr(fontPrefix.length)
+        } else if(accum.buildingFont){
+            if(part.endsWith('"')){
+                accum.font = `${accum.buildingFont} ${part.substr(0, part.length - 1)}`;
+                accum.buildingFont = '';
+            } else {
+                accum.buildingFont += ' ' + part;
+            }
+        } else {
+            accum.phrase += ' ' + part
+        }
+        return accum;
+    }, {
+        phrase: '',
+        buildingFont: '',
+        font:'',
     });
+
+    if(!!buildingFont && !font){
+        //bad font
+    }
+
+    return Promise.resolve({
+        phrase: phrase.trim(),
+        font
+    })
+};
+
+const extractArguments = (userArguments: string): Promise<FontArguments> => {
+    if(userArguments.indexOf('-') > -1){
+        return extractFontArguments(userArguments);
+    } else {
+        return Promise.resolve({
+            phrase: userArguments
+        });
+    }
 };
 
 export const phraseCommand: Command = userArguments => {
