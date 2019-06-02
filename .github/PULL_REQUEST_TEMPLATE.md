@@ -25,3 +25,5 @@
 - [ ] My code follows the code style of this projectRef.
 - [ ] My change requires a change to the documentation.
 - [ ] I wrote tests for added functionality.
+- [ ] I updated the version.
+- [ ] I updated the changelog with the new functionality.
