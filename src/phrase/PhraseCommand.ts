@@ -41,9 +41,9 @@ const constructFontArguments = (userArguments: string): Promise<FontArguments> =
 \`/exyos phrase -font="Def Leppard" Phrase Here\`
 Available Fonts (Case-Sensitive): ${getAvailableFonts()}`);
         } else if (part.startsWith(fontPrefix) && part.endsWith('"')) {
-            accum.font = validateFont(part.substr(fontPrefix.length, part.length - 1));
+            accum.font = validateFont(part.substring(fontPrefix.length, part.length - 1));
         } else if (part.startsWith(fontPrefix) && !part.endsWith('"')) {
-            accum.buildingFont = part.substr(fontPrefix.length);
+            accum.buildingFont = part.substring(fontPrefix.length);
         } else if (accum.buildingFont) {
             if (part.endsWith('"')) {
                 const builtFont = `${accum.buildingFont} ${part.substr(0, part.length - 1)}`;
