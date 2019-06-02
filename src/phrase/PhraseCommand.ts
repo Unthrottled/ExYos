@@ -1,5 +1,7 @@
 const figlet = require('figlet');
 import {Command} from "../Command";
+import CommandError from "../CommandError";
+import fonts from "./Fonts";
 
 type FontArguments = {
     font?: string,
@@ -7,40 +9,52 @@ type FontArguments = {
 }
 
 const fontPrefix = '-font="';
-const extractFontArguments = (userArguments: string): Promise<FontArguments> =>{
+const constructFontArguments = (userArguments: string): Promise<FontArguments> => {
     const parsedArguments = userArguments.split(' ');
-    const {phrase, buildingFont, font} = parsedArguments.reduce((accum, part)=>{
-        if(part.startsWith(fontPrefix)){
-            accum.buildingFont = part.substr(fontPrefix.length)
-        } else if(accum.buildingFont){
-            if(part.endsWith('"')){
+    const {phrase, buildingFont, font} = parsedArguments.reduce((accum, part) => {
+        if (part === '-help') {
+            throw new CommandError(`Phrase Usage`,
+                `/exyos phrase Phrase Here
+/exyos phrase -font="Def Leppard" Phrase Here
+Available Fonts: ${fonts.join(', ')}`);
+        } else if (part.startsWith(fontPrefix)) {
+            accum.buildingFont = part.substr(fontPrefix.length);
+        } else if (accum.buildingFont) {
+            if (part.endsWith('"')) {
                 accum.font = `${accum.buildingFont} ${part.substr(0, part.length - 1)}`;
                 accum.buildingFont = '';
             } else {
                 accum.buildingFont += ' ' + part;
             }
         } else {
-            accum.phrase += ' ' + part
+            accum.phrase += ' ' + part;
         }
         return accum;
     }, {
         phrase: '',
         buildingFont: '',
-        font:'',
+        font: '',
     });
 
-    if(!!buildingFont && !font){
+    if (!!buildingFont && !font) {
         //bad font
     }
 
     return Promise.resolve({
         phrase: phrase.trim(),
         font
-    })
+    });
+};
+const extractFontArguments = (userArguments: string): Promise<FontArguments> => {
+    try {
+        return constructFontArguments(userArguments);
+    } catch (e) {
+        return Promise.reject(e);
+    }
 };
 
 const extractArguments = (userArguments: string): Promise<FontArguments> => {
-    if(userArguments.indexOf('-') > -1){
+    if (userArguments.indexOf('-') > -1) {
         return extractFontArguments(userArguments);
     } else {
         return Promise.resolve({
