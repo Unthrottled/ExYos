@@ -93,8 +93,14 @@ const extractArguments = (userArguments: string): Promise<FontArguments> => {
     }
 };
 
+//(╯°□°)╯︵sǝʇonb ʇɹɐɯS SOɔɐW
+const sanitizeArguments = (dirtyUserArguments: string): string => {
+    return dirtyUserArguments.replace(/”/,'"')
+        .replace(/“/, '"')
+};
+
 export const phraseCommand: Command = userArguments => {
-    return extractArguments(userArguments).then(({font, phrase}) =>
+    return extractArguments(sanitizeArguments(userArguments)).then(({font, phrase}) =>
         new Promise((resolve, reject) => {
             figlet.text(phrase, {
                 ...(font ? {font} : {}),
