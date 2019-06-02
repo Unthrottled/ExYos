@@ -68,21 +68,27 @@ const createCommandResponse = slackRequest => {
         ],
         "response_type": 'in_channel',
       }))
-      .catch(({failureResponse, tip}) => ({
-        "text": failureResponse,
-        "attachments": [
-          ...(tip ? [
-            {
-              "text": tip,
-            }
-          ] : [
-            {
-              "text": `Available Commands: ${commands.join(", ")}`,
-            }
-          ])
-        ],
-        "response_type": "ephemeral",
-      }))
+      .catch((error) => {
+        if(!(error instanceof CommandError)) {
+          console.error(error);
+        }
+        const {failureResponse, tip} = error;
+        return ({
+          "text": failureResponse,
+          "attachments": [
+            ...(tip ? [
+              {
+                "text": tip,
+              }
+            ] : [
+              {
+                "text": `Available Commands: ${commands.join(", ")}`,
+              }
+            ])
+          ],
+          "response_type": "ephemeral",
+        });
+      })
   } else {
     return Promise.resolve({
       "text": `Usage: <Command> <Arguments>`,

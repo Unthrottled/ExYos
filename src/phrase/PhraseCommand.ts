@@ -1,4 +1,4 @@
-const figlet = require('figlet');
+const figlet = require('figlet/lib/node-figlet.js');
 import {Command} from "../Command";
 import CommandError from "../CommandError";
 import fonts from "./Fonts";
