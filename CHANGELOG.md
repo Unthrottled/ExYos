@@ -1,5 +1,11 @@
 Changelog
 ---
+## 1.2.0
+- ASCII Art Phrases
+    - `/exyos phrase Memes`
+    - `/exyos phrase -font="Def Leppard" Def Leppard`
+    - `/exyos phrase -help`
+        - Gives you a list of all available fonts.
 
 ## 1.1.0
 
