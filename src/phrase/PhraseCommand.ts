@@ -4,7 +4,7 @@ import CommandError from "../CommandError";
 import fonts from "./Fonts";
 
 const fontDictionary = fonts.reduce((dictionary, font)=>{
-    dictionary[font] = font;
+    dictionary[font.toLocaleLowerCase()] = font;
     return dictionary;
 },{});
 
@@ -14,15 +14,17 @@ type FontArguments = {
 }
 
 function buildBadFont(font: string) {
-    throw new CommandError(`Unknown Font: "${font}"`, `Available Fonts (Case-Sensitive): ${getAvailableFonts()}`);
+    throw new CommandError(`Unknown Font: "${font}"`, `Available Fonts: ${getAvailableFonts()}`);
 }
 
 const validateFont = (font: string): string =>{
+    const insensitiveFont = font.toLocaleLowerCase();
     // @ts-ignore
-    if(!fontDictionary[font]){
+    const fontDictionaryElement = fontDictionary[insensitiveFont];
+    if(!fontDictionaryElement){
         buildBadFont(font);
     } else {
-        return font;
+        return fontDictionaryElement;
     }
 };
 
@@ -43,7 +45,7 @@ const constructFontArguments = (userArguments: string): Promise<FontArguments> =
                 `\`/exyos phrase Phrase Here\`
 \`/exyos phrase -font="Def Leppard" Phrase Here\`
 \`/exyos phrase -f="Def Leppard" Phrase Here\`
-Available Fonts (Case-Sensitive): ${getAvailableFonts()}`);
+Available Fonts: ${getAvailableFonts()}`);
         } else if (isFontCommand(part) && part.endsWith('"')) {
             accum.font = validateFont(part.substring(part.indexOf('="')+2, part.length - 1));
         } else if (isFontCommand(part) && !part.endsWith('"')) {
