@@ -1,5 +1,11 @@
 Changelog
 ---
+
+## 1.2.1
+
+- Mac Users can now specify a font of their choosing
+    - Better MacOS Smart Quote Handling.
+
 ## 1.2.0
 - ASCII Art Phrases
     - `/exyos phrase Memes`
