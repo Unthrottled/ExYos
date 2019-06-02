@@ -1,6 +1,12 @@
 Changelog
 ---
 
+## 1.2.2
+
+- Enhanced Font specification!
+    - Font names are no longer case-sensitive! Seriously!.
+        - try: `/exyos -f="gHoSt" 2Spooky4Me`!
+
 ## 1.2.1
 
 - Mac Users can now specify a font of their choosing
