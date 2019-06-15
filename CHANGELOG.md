@@ -1,6 +1,16 @@
 Changelog
 ---
 
+## 1.3.0
+- Defaulting the `flip` and `unflip` commands to tables of any non-command strings are provided.
+    - Including but not limited to these combination.
+        - `/exyos flip` (╯°□°)╯︵┻━┻
+        - `/exyos unflip` ┳━┳ノ(º _ ºノ)
+        - `/exyos flip thanks obama` (╯°□°)╯︵ɐɯɐqo sʞuɐɥʇ
+        - `/exyos unflip thanks obama` thanks obamaノ(º _ ºノ)
+        - `/exyos flip -rage` (╯ಠ益ಠ)╯彡┻━┻
+        - `/exyos unflip -rage`┳━┳ノ(ಠ益ಠノ)
+
 ## 1.2.2
 
 - Enhanced Font specification!
