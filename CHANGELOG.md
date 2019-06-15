@@ -1,6 +1,10 @@
 Changelog
 ---
 
+## 1.3.1
+- Non-Functional Release
+    - Added TS Lint.
+
 ## 1.3.0
 - Defaulting the `flip` and `unflip` commands to tables of any non-command strings are provided.
     - Including but not limited to these combination.
