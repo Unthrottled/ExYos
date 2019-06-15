@@ -1,8 +1,8 @@
-import {PERSON, PHRASE, TABLE} from "./FlipableItems";
-import {flipWord} from "./WordFlip";
-import {ALARMED, getFace, RAGE, YELLING} from "../Faces";
 import {Command} from "../Command";
 import CommandError from "../CommandError";
+import {ALARMED, getFace, RAGE, YELLING} from "../Faces";
+import {PERSON, PHRASE, TABLE} from "./FlipableItems";
+import {flipWord} from "./WordFlip";
 
 const extractFlipExpressionParts = flipArguments => {
   return parseFlipArguments(flipArguments)
@@ -14,7 +14,7 @@ const extractFlipExpressionParts = flipArguments => {
         face,
         velocity,
         flippedItem
-      }
+      };
     });
 };
 
@@ -28,7 +28,6 @@ const getVelocity = velocityType => {
       return '彡';
   }
 };
-
 
 const getFlippedItem = item => {
   switch (item.type) {
@@ -54,18 +53,18 @@ const actuallyParseArguments = flipArgumentToParse => {
       builtArguments.flippedItem = {type: TABLE};
     } else if (currentString === '-rage') {
       builtArguments.velocity = {type: FORCEFUL_VELOCITY};
-      builtArguments.face = {type: RAGE}
+      builtArguments.face = {type: RAGE};
     } else if (currentString === '-alarmed') {
       builtArguments.velocity = {type: FORCEFUL_VELOCITY};
-      builtArguments.face = {type: ALARMED}
-    } else if(currentString === '-help'){
-      throw new CommandError(`Flip Usage`, getAvailableArgumentsString())
+      builtArguments.face = {type: ALARMED};
+    } else if (currentString === '-help') {
+      throw new CommandError(`Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString())
-    } else if(builtArguments.flippedItem.type === PHRASE){
-      builtArguments.flippedItem.payload += `${currentString} `
+      throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString());
+    } else if (builtArguments.flippedItem.type === PHRASE) {
+      builtArguments.flippedItem.payload += `${currentString} `;
     }
-    return builtArguments
+    return builtArguments;
   }, {
     flippedItem: {
       type: PHRASE,
@@ -78,8 +77,25 @@ const actuallyParseArguments = flipArgumentToParse => {
       type: YELLING
     },
   });
-  return Promise.resolve(argumentProjection);
+  return Promise.resolve(argumentProjection)
+    .then(argumentProj => {
+      const {flippedItem: {type, payload}} = argumentProj;
+      if (type === PHRASE && !payload) {
+        return {
+          ...argumentProj,
+          flippedItem: {type: TABLE},
+        };
+      } else {
+        return argumentProj;
+      }
+    });
 };
+
+const getNoArgumentFlippedItem = (flipArgument: string) =>
+  !flipArgument ? ({type: TABLE}) : ({
+    type: PHRASE,
+    payload: flipArgument,
+  });
 
 const parseFlipArguments = flipArguments => {
   return Promise.resolve(flipArguments)
@@ -88,17 +104,14 @@ const parseFlipArguments = flipArguments => {
         return actuallyParseArguments(flipArgument);
       } else {
         return {
-          flippedItem: {
-            type: PHRASE,
-            payload: flipArgument,
-          },
+          flippedItem: getNoArgumentFlippedItem(flipArgument),
           velocity: {
             type: NORMAL_VELOCITY
           },
           face: {
             type: YELLING
           },
-        }
+        };
       }
     });
 };
