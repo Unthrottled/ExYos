@@ -1,5 +1,5 @@
-import {signPieces} from "./Sign";
-import {Command} from "../Command";
+import {Command} from '../Command';
+import {signPieces} from './Sign';
 
 const SIGN_PADDING = 2;
 const defaultPhrase = 'Turn down for what?';
@@ -8,25 +8,25 @@ const padding = Array(SIGN_PADDING).fill('').map(() => ' ').join('');
 const signStartPadding = '|' + padding;
 const signWidths = [
   {
-    predicate: number => number < 25,
+    predicate: numberCharacters => numberCharacters < 25,
     value: 15,
   },
   {
-    predicate: number => number < 50,
+    predicate: numberCharacters => numberCharacters < 50,
     value: 25,
   },
   {
-    predicate: number => number < 200,
+    predicate: numberCharacters => numberCharacters < 200,
     value: 50,
   },
   {
-    predicate: number => number <= 400,
+    predicate: numberCharacters => numberCharacters <= 400,
     value: 75,
   },
   {
-    predicate: number => number > 400,
+    predicate: numberCharacters => numberCharacters > 400,
     value: 100,
-  }
+  },
 ];
 const findMaxSignWidth = phraseLength =>
   signWidths.find(signWidth => signWidth.predicate(phraseLength)).value;
@@ -42,9 +42,9 @@ const constructSentences = (max, words, length) => {
         accum.sentences.push(newSentence);
         const sentenceLength = newSentence.length;
         if (sentenceLength > accum.maxSentenceLength) {
-          accum.maxSentenceLength = sentenceLength
+          accum.maxSentenceLength = sentenceLength;
         }
-        accum.currentSentence = ''
+        accum.currentSentence = '';
       }
 
       accum.currentSentence += ` ${word}`;
@@ -58,7 +58,7 @@ const constructSentences = (max, words, length) => {
   sentences.push(currentSentence.trimLeft());
   return {
     sentences,
-    signWidth
+    signWidth,
   };
 };
 
@@ -67,7 +67,7 @@ const renderSign = phrase => {
     phrase.split(' ').reduce((accum, word) => {
       const wordLength = word.length;
       if (wordLength > accum.max) {
-        accum.max = wordLength
+        accum.max = wordLength;
       }
       accum.words.push(word);
       accum.length += wordLength;
@@ -75,7 +75,7 @@ const renderSign = phrase => {
     }, {
       max: 0,
       length: 0,
-      words: []
+      words: [],
     });
 
   const {sentences, signWidth} = constructSentences(max, words, length);
@@ -91,26 +91,26 @@ const renderSign = phrase => {
   const sign = [
     paddedSignTopper,
     ...signSegments,
-    paddedSignTopper
+    paddedSignTopper,
   ].join('\n');
 
   return {
-    sign
+    sign,
   };
 };
 const bunnyPostCenter = 8;
 const renderSignBunny = phrase => {
   const {sign} = renderSign(phrase);
   const signLength = sign.indexOf('\n');
-  const bunnyCenteringPadding = Math.floor(signLength/2) - bunnyPostCenter;
-  const bunnyPadding = Array(bunnyCenteringPadding).fill('').map(()=>' ').join('');
+  const bunnyCenteringPadding = Math.floor(signLength / 2) - bunnyPostCenter;
+  const bunnyPadding = Array(bunnyCenteringPadding).fill('').map(() => ' ').join('');
   const bunny = signPieces
     .map(bunnyPart => `${bunnyPadding}${bunnyPart}`)
     .join('');
   const signBunny =
     `\`\`\`${sign}
 ${bunny}\`\`\``;
-  return Promise.resolve(signBunny)
+  return Promise.resolve(signBunny);
 };
 
 export const signCommand: Command = userArguments => {

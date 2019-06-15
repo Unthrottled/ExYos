@@ -1,27 +1,27 @@
 const figlet = require('figlet/lib/node-figlet.js');
-import {Command} from "../Command";
-import CommandError from "../CommandError";
-import fonts from "./Fonts";
+import {Command} from '../Command';
+import CommandError from '../CommandError';
+import fonts from './Fonts';
 
-const fontDictionary = fonts.reduce((dictionary, font)=>{
+const fontDictionary = fonts.reduce((dictionary, font) => {
     dictionary[font.toLocaleLowerCase()] = font;
     return dictionary;
-},{});
+}, {});
 
-type FontArguments = {
-    font?: string,
-    phrase: string,
+interface FontArguments {
+    font?: string;
+    phrase: string;
 }
 
 function buildBadFont(font: string) {
     throw new CommandError(`Unknown Font: "${font}"`, `Available Fonts: ${getAvailableFonts()}`);
 }
 
-const validateFont = (font: string): string =>{
+const validateFont = (font: string): string => {
     const insensitiveFont = font.toLocaleLowerCase();
     // @ts-ignore
     const fontDictionaryElement = fontDictionary[insensitiveFont];
-    if(!fontDictionaryElement){
+    if (!fontDictionaryElement) {
         buildBadFont(font);
     } else {
         return fontDictionaryElement;
@@ -47,9 +47,9 @@ const constructFontArguments = (userArguments: string): Promise<FontArguments> =
 \`/exyos phrase -f="Def Leppard" Phrase Here\`
 Available Fonts: ${getAvailableFonts()}`);
         } else if (isFontCommand(part) && part.endsWith('"')) {
-            accum.font = validateFont(part.substring(part.indexOf('="')+2, part.length - 1));
+            accum.font = validateFont(part.substring(part.indexOf('="') + 2, part.length - 1));
         } else if (isFontCommand(part) && !part.endsWith('"')) {
-            accum.buildingFont = part.substring(part.indexOf('="')+2);
+            accum.buildingFont = part.substring(part.indexOf('="') + 2);
         } else if (accum.buildingFont) {
             if (part.endsWith('"')) {
                 const builtFont = `${accum.buildingFont} ${part.substr(0, part.length - 1)}`;
@@ -74,7 +74,7 @@ Available Fonts: ${getAvailableFonts()}`);
 
     return Promise.resolve({
         phrase: phrase.trim(),
-        font
+        font,
     });
 };
 const extractFontArguments = (userArguments: string): Promise<FontArguments> => {
@@ -90,15 +90,15 @@ const extractArguments = (userArguments: string): Promise<FontArguments> => {
         return extractFontArguments(userArguments);
     } else {
         return Promise.resolve({
-            phrase: userArguments
+            phrase: userArguments,
         });
     }
 };
 
-//(╯°□°)╯︵sǝʇonb ʇɹɐɯS SOɔɐW
+// (╯°□°)╯︵sǝʇonb ʇɹɐɯS SOɔɐW
 const sanitizeArguments = (dirtyUserArguments: string): string => {
-    return dirtyUserArguments.replace(/”/,'"')
-        .replace(/“/, '"')
+    return dirtyUserArguments.replace(/”/, '"')
+        .replace(/“/, '"');
 };
 
 export const phraseCommand: Command = userArguments => {
@@ -107,7 +107,7 @@ export const phraseCommand: Command = userArguments => {
             figlet.text(phrase, {
                 ...(font ? {font} : {}),
                 horizontalLayout: 'default',
-                verticalLayout: 'default'
+                verticalLayout: 'default',
             }, (error, translatedPhrase) => {
                 if (error) {
                     console.error(error);

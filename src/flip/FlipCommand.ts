@@ -1,8 +1,8 @@
-import {Command} from "../Command";
-import CommandError from "../CommandError";
-import {ALARMED, getFace, RAGE, YELLING} from "../Faces";
-import {PERSON, PHRASE, TABLE} from "./FlipableItems";
-import {flipWord} from "./WordFlip";
+import {Command} from '../Command';
+import CommandError from '../CommandError';
+import {ALARMED, getFace, RAGE, YELLING} from '../Faces';
+import {PERSON, PHRASE, TABLE} from './FlipableItems';
+import {flipWord} from './WordFlip';
 
 const extractFlipExpressionParts = flipArguments => {
   return parseFlipArguments(flipArguments)
@@ -13,7 +13,7 @@ const extractFlipExpressionParts = flipArguments => {
       return {
         face,
         velocity,
-        flippedItem
+        flippedItem,
       };
     });
 };
@@ -47,7 +47,7 @@ function getAvailableArgumentsString() {
 }
 
 const actuallyParseArguments = flipArgumentToParse => {
-  const parsedArguments = flipArgumentToParse.split(" ");
+  const parsedArguments = flipArgumentToParse.split(' ');
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
@@ -71,10 +71,10 @@ const actuallyParseArguments = flipArgumentToParse => {
       payload: '',
     },
     velocity: {
-      type: NORMAL_VELOCITY
+      type: NORMAL_VELOCITY,
     },
     face: {
-      type: YELLING
+      type: YELLING,
     },
   });
   return Promise.resolve(argumentProjection)
@@ -106,10 +106,10 @@ const parseFlipArguments = flipArguments => {
         return {
           flippedItem: getNoArgumentFlippedItem(flipArgument),
           velocity: {
-            type: NORMAL_VELOCITY
+            type: NORMAL_VELOCITY,
           },
           face: {
-            type: YELLING
+            type: YELLING,
           },
         };
       }
