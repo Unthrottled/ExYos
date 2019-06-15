@@ -11,7 +11,7 @@
         "array-type": {
             "options": ["array-simple"]
         },
-        "arrow-parens": true,
+        "arrow-parens": false,
         "arrow-return-shorthand": true,
         "ban-types": {
             "options": [
@@ -39,9 +39,6 @@
         "indent": {
             "options": ["spaces"]
         },
-        "interface-name": {
-            "options": ["always-prefix"]
-        },
         "interface-over-type-literal": true,
         "jsdoc-format": true,
         "label-position": true,
@@ -60,7 +57,7 @@
         "no-bitwise": true,
         "no-conditional-assignment": true,
         "no-consecutive-blank-lines": true,
-        "no-console": true,
+        "no-console": false,
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-super": true,
@@ -84,10 +81,10 @@
         "no-unused-expression": true,
         "no-use-before-declare": false, // disabled because it is very heavy performance-wise and not that useful
         "no-var-keyword": true,
-        "no-var-requires": true,
+        "no-var-requires": false,
         "object-literal-key-quotes": { "options": "consistent-as-needed" },
         "object-literal-shorthand": true,
-        "object-literal-sort-keys": true,
+        "object-literal-sort-keys": false,
         "one-line": {
             "options": [
                 "check-catch",
@@ -110,7 +107,7 @@
         "prefer-const": true,
         "prefer-for-of": true,
         "quotemark": {
-            "options": ["double", "avoid-escape"]
+            "options": ["single", "avoid-escape"]
         },
         "radix": true,
         "semicolon": { "options": ["always"] },

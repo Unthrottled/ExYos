@@ -1,5 +1,5 @@
-import {suddenlyPieces} from "./Suddenly";
-import {Command} from "../Command";
+import {Command} from '../Command';
+import {suddenlyPieces} from './Suddenly';
 
 const defaultPhrase = '';
 

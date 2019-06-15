@@ -1,7 +1,7 @@
-import {ALARMED, getFace, RAGE, SOLEMN} from "../Faces";
-import CommandError from "../CommandError";
-import {PERSON, PHRASE, TABLE} from "./FlipableItems";
-import {Command} from "../Command";
+import {Command} from '../Command';
+import CommandError from '../CommandError';
+import {ALARMED, getFace, RAGE, SOLEMN} from '../Faces';
+import {PERSON, PHRASE, TABLE} from './FlipableItems';
 
 const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
 
@@ -10,29 +10,29 @@ function getAvailableArgumentsString() {
 }
 
 const actuallyParseUnFlipArguments = unflipArgumentToParse => {
-  const parsedArguments = unflipArgumentToParse.split(" ");
+  const parsedArguments = unflipArgumentToParse.split(' ');
   const argumentProjection = parsedArguments.reduce((builtArguments, currentString) => {
     if (currentString === '-table') {
       builtArguments.flippedItem = {type: TABLE};
     } else if (currentString === '-rage') {
-      builtArguments.face = {type: RAGE}
+      builtArguments.face = {type: RAGE};
     } else if (currentString === '-alarmed') {
-      builtArguments.face = {type: ALARMED}
-    } else if(currentString === '-help'){
-      throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString())
+      builtArguments.face = {type: ALARMED};
+    } else if (currentString === '-help') {
+      throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {
-      throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString())
-    } else if(builtArguments.flippedItem.type === PHRASE){
-      builtArguments.flippedItem.payload += `${currentString} `
+      throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString());
+    } else if (builtArguments.flippedItem.type === PHRASE) {
+      builtArguments.flippedItem.payload += `${currentString} `;
     }
-    return builtArguments
+    return builtArguments;
   }, {
     flippedItem: {
       type: PHRASE,
       payload: '',
     },
     face: {
-      type: SOLEMN
+      type: SOLEMN,
     },
   });
   return Promise.resolve(argumentProjection)
@@ -64,9 +64,9 @@ const parseUnFlipArguments = unflipArguments => {
         return {
           flippedItem: getNoArgumentUnFlippedItem(unflipArgument),
           face: {
-            type: SOLEMN
+            type: SOLEMN,
           },
-        }
+        };
       }
     });
 };
@@ -89,11 +89,10 @@ const extractUnFlipExpressionParts = flipArguments => {
       const unFlippedItem = getUnFlippedItem(parsedArguments.flippedItem);
       return {
         face,
-        unFlippedItem
+        unFlippedItem,
       };
     });
 };
-
 
 export const unFlipCommand: Command = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)

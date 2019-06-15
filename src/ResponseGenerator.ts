@@ -1,9 +1,9 @@
-import {flipCommand} from "./flip/FlipCommand";
-import {unFlipCommand} from "./flip/UnflipCommand";
-import {suddenlyCommand} from "./suddenly/SuddenlyCommand";
-import {signCommand} from "./sign/SignCommand";
-import {phraseCommand} from "./phrase/PhraseCommand";
-import CommandError from "./CommandError";
+import CommandError from './CommandError';
+import {flipCommand} from './flip/FlipCommand';
+import {unFlipCommand} from './flip/UnflipCommand';
+import {phraseCommand} from './phrase/PhraseCommand';
+import {signCommand} from './sign/SignCommand';
+import {suddenlyCommand} from './suddenly/SuddenlyCommand';
 
 const {isSlackRequest} = require('./Security');
 
@@ -27,7 +27,7 @@ const extractCommand = fullCommand => {
   const userArguments = firstSpace > -1 ? fullCommand.substring(firstSpace + 1) : '';
   return {
     command,
-    userArguments
+    userArguments,
   };
 };
 
@@ -60,44 +60,44 @@ const createCommandResponse = slackRequest => {
   if (isGoodRequest(slackRequest)) {
     return getResponse(slackRequest)
       .then(responseBody => ({
-        "text": responseBody,
-        "attachments": [
+        text: responseBody,
+        attachments: [
           {
-            "text": `Courtesy of <@${(slackRequest.user_id || '').trim()}>`,
-          }
+            text: `Courtesy of <@${(slackRequest.user_id || '').trim()}>`,
+          },
         ],
-        "response_type": 'in_channel',
+        response_type: 'in_channel',
       }))
       .catch((error) => {
-        if(!(error instanceof CommandError)) {
+        if (!(error instanceof CommandError)) {
           console.error(error);
         }
         const {failureResponse, tip} = error;
         return ({
-          "text": failureResponse,
-          "attachments": [
+          text: failureResponse,
+          attachments: [
             ...(tip ? [
               {
-                "text": tip,
-              }
+                text: tip,
+              },
             ] : [
               {
-                "text": `Available Commands: ${commands.join(", ")}`,
-              }
-            ])
+                text: `Available Commands: ${commands.join(', ')}`,
+              },
+            ]),
           ],
-          "response_type": "ephemeral",
+          response_type: 'ephemeral',
         });
-      })
+      });
   } else {
     return Promise.resolve({
-      "text": `Usage: <Command> <Arguments>`,
-      "attachments": [
+      text: `Usage: <Command> <Arguments>`,
+      attachments: [
         {
-          "text": `Available Commands: ${commands.join(", ")}`,
-        }
+          text: `Available Commands: ${commands.join(', ')}`,
+        },
       ],
-      "response_type": "ephemeral",
+      response_type: 'ephemeral',
     });
   }
 };
@@ -110,9 +110,9 @@ export function generateResponse(request) {
     return createCommandResponse(requestBody)
       .then((exyosResponse) => ({
         slackUrl: getResponseUrl(requestBody),
-        exyosResponse
+        exyosResponse,
       }));
   } else {
-    return Promise.reject("Not a Slack Request");
+    return Promise.reject('Not a Slack Request');
   }
 }

@@ -1,6 +1,6 @@
-import axios from "axios";
-import {generateResponse} from "./ResponseGenerator";
-import teapot from "./Teapot";
+import axios from 'axios';
+import {generateResponse} from './ResponseGenerator';
+import teapot from './Teapot';
 
 const sendDelayedResponse = (slackUrl, exyosResponse) =>
   axios.post(slackUrl, exyosResponse, {
@@ -16,9 +16,9 @@ const processRequest = request => {
 };
 
 const handler = (request, response) => {
-  processRequest(request).then(()=>{
-    //TIL that Serverless only run when they are serving a request
-    //So I have to post to the call back before ending the response. λ
+  processRequest(request).then(() => {
+    // TIL that Serverless only run when they are serving a request
+    // So I have to post to the call back before ending the response. λ
     response.status(200).end();
   })
     .catch(() => {
@@ -26,4 +26,4 @@ const handler = (request, response) => {
     });
 };
 
-export default handler
+export default handler;

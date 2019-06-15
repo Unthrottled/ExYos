@@ -1,1 +1,1 @@
-export type Command = (userArguments: string) => Promise<string>
+export type Command = (userArguments: string) => Promise<string>;
