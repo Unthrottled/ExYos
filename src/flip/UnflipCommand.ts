@@ -35,8 +35,25 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
       type: SOLEMN
     },
   });
-  return Promise.resolve(argumentProjection);
+  return Promise.resolve(argumentProjection)
+    .then(argumentProj => {
+      const {flippedItem: {type, payload}} = argumentProj;
+      if (type === PHRASE && !payload) {
+        return {
+          ...argumentProj,
+          flippedItem: {type: TABLE},
+        };
+      } else {
+        return argumentProj;
+      }
+    });
 };
+
+const getNoArgumentUnFlippedItem = (unFlipArgument: string) =>
+  !unFlipArgument ? ({type: TABLE}) : ({
+    type: PHRASE,
+    payload: unFlipArgument,
+  });
 
 const parseUnFlipArguments = unflipArguments => {
   return Promise.resolve(unflipArguments)
@@ -45,10 +62,7 @@ const parseUnFlipArguments = unflipArguments => {
         return actuallyParseUnFlipArguments(unflipArgument);
       } else {
         return {
-          flippedItem: {
-            type: PHRASE,
-            payload: unflipArgument,
-          },
+          flippedItem: getNoArgumentUnFlippedItem(unflipArgument),
           face: {
             type: SOLEMN
           },
