@@ -1,5 +1,8 @@
 Changelog
 ---
+## 1.3.2
+- Installed personality module.
+    - ExYos has some clever things to say in response to your request.
 
 ## 1.3.1
 - Non-Functional Release
