@@ -1,6 +1,7 @@
 import CommandError from './CommandError';
 import {flipCommand} from './flip/FlipCommand';
 import {unFlipCommand} from './flip/UnflipCommand';
+import {messageGenerator} from "./message/MessageGenerator";
 import {phraseCommand} from './phrase/PhraseCommand';
 import {signCommand} from './sign/SignCommand';
 import {suddenlyCommand} from './suddenly/SuddenlyCommand';
@@ -63,7 +64,7 @@ const createCommandResponse = slackRequest => {
         text: responseBody,
         attachments: [
           {
-            text: `Courtesy of <@${(slackRequest.user_id || '').trim()}>`,
+            text: messageGenerator(`<@${(slackRequest.user_id || '').trim()}>`),
           },
         ],
         response_type: 'in_channel',
