@@ -42,12 +42,23 @@ const isFontCommand = part => part.startsWith(fontPrefix) || part.startsWith(oth
 const NONE = '';
 const BOUNCER = 'bouncer';
 
+const FONT_LONG = '-font';
+const FONT_SHORT = '-f';
+const HELP = '-help';
+const BOUNCER_COMMAND = '-bouncer';
+
+const availableCommands = [
+    FONT_LONG, FONT_SHORT,
+    HELP, BOUNCER_COMMAND,
+];
+
 const constructPhraseArguments = (userArguments: string): Promise<FontArguments> => {
   const parsedArguments = userArguments.split(' ');
   const {phrase, buildingFont, font, art} = parsedArguments.reduce((accum, part) => {
-    if (part === '-help') {
+    if (part === HELP) {
       throw new CommandError(`Phrase Usage`,
           `\`/exyos phrase Phrase Here\`
+\`/exyos phrase -bouncer Not Today\`
 \`/exyos phrase -font="Def Leppard" Phrase Here\`
 \`/exyos phrase -f="Def Leppard" Phrase Here\`
 Available Fonts: ${getAvailableFonts()}`);
@@ -55,10 +66,13 @@ Available Fonts: ${getAvailableFonts()}`);
       accum.font = validateFont(part.substring(part.indexOf('="') + 2, part.length - 1));
     } else if (isFontCommand(part) && !part.endsWith('"')) {
       accum.buildingFont = part.substring(part.indexOf('="') + 2);
-    } else if (part === '-bouncer') {
+    } else if (part === BOUNCER_COMMAND) {
       accum.art = BOUNCER;
     } else if (part.startsWith('-')) {
-      // todo: bad command.
+      throw new CommandError(`Unknown Command: ${part}`,
+          `Available Commands: ${availableCommands.join(', ')}
+use \`/exyos phrase -help\` to see more options.`);
+
     } else if (accum.buildingFont) {
       if (part.endsWith('"')) {
         const builtFont = `${accum.buildingFont} ${part.substr(0, part.length - 1)}`;
