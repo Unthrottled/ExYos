@@ -40,6 +40,547 @@ describe('Phrases', () => {
                                                                     \`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
+  it('should return phrase with default text and bouncer', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase -bouncer Meme Machine'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`                            *%%%%%.                           
+
+                        %%%         %%%                        
+
+                     ,%#               %%                     
+
+                    %%                   %%                   
+
+                   %#                     %%                  
+
+                  %%                       %                  
+
+                  %(                       %%                 
+
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%                 
+
+                %#%*%#///////%# %%///////%%%%%%                
+
+               ,% %*%%******%#   %%******%(%%,%               
+
+                 %%/ %%/**%%/%%%%%%%(**#%( %%#                
+
+                  %%          %%%          %(                 
+
+                   %                      .%                  
+
+                   *%        %%%%%       .%                   
+
+                     %#                 %%                    
+
+                      .%%            .%%                       
+
+                      .%%.%%,     %%%.%%/                     
+
+                %%%%%%##%.  #%%%%%.  .%((%%%%%%               
+
+            %%#(((((((((%%,         #%%(((((((((#%%.          
+
+      %%%((((((((((((((((((%%%, .%%%((((((((((((((((((#%%*    
+
+    %%(((((((((((((((((((((((((%(((((((((((((((((((((((((#%.  
+
+  ,%(((((((((((((((((((((((((((((((((((((((((((((((((((((((%# 
+
+  %#((((((((((((((((((((((((((((((((((((((((((((((((((((((((% 
+
+  %%%%%%%%%%%%%(((((((((((((((((((((((((((((((((%%%%%%%%%%%%% 
+
+ %%            %####((((((###%%%%%%%%#(((((((((%            ,%
+
+,%             %%%%%%#.               %%%((((((%*            %%
+
+#%                                       %%%#                %%
+
+.%                             .%%%%%%%%%                    %#
+
+ %                         #%%%                              %
+
+ %                     %%%%                                  %*
+
+/%************/#%%%%%%######%%*                        ..,*/(%%
+
+              %%######(((((((##################%%             
+
+              %%######(((((((((((((((((((((((((%%             
+
+//////////////%%%%%%%%#########################%%/////////  ///
+  __  __                       __  __            _     _            
+ |  \\/  | ___ _ __ ___   ___  |  \\/  | __ _  ___| |__ (_)_ __   ___ 
+ | |\\/| |/ _ \\ '_ \` _ \\ / _ \\ | |\\/| |/ _\` |/ __| '_ \\| | '_ \\ / _ \\
+ | |  | |  __/ | | | | |  __/ | |  | | (_| | (__| | | | | | | |  __/
+ |_|  |_|\\___|_| |_| |_|\\___| |_|  |_|\\__,_|\\___|_| |_|_|_| |_|\\___|
+                                                                    \`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return phrase with just bouncer', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase -bouncer'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`                            *%%%%%.                           
+
+                        %%%         %%%                        
+
+                     ,%#               %%                     
+
+                    %%                   %%                   
+
+                   %#                     %%                  
+
+                  %%                       %                  
+
+                  %(                       %%                 
+
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%                 
+
+                %#%*%#///////%# %%///////%%%%%%                
+
+               ,% %*%%******%#   %%******%(%%,%               
+
+                 %%/ %%/**%%/%%%%%%%(**#%( %%#                
+
+                  %%          %%%          %(                 
+
+                   %                      .%                  
+
+                   *%        %%%%%       .%                   
+
+                     %#                 %%                    
+
+                      .%%            .%%                       
+
+                      .%%.%%,     %%%.%%/                     
+
+                %%%%%%##%.  #%%%%%.  .%((%%%%%%               
+
+            %%#(((((((((%%,         #%%(((((((((#%%.          
+
+      %%%((((((((((((((((((%%%, .%%%((((((((((((((((((#%%*    
+
+    %%(((((((((((((((((((((((((%(((((((((((((((((((((((((#%.  
+
+  ,%(((((((((((((((((((((((((((((((((((((((((((((((((((((((%# 
+
+  %#((((((((((((((((((((((((((((((((((((((((((((((((((((((((% 
+
+  %%%%%%%%%%%%%(((((((((((((((((((((((((((((((((%%%%%%%%%%%%% 
+
+ %%            %####((((((###%%%%%%%%#(((((((((%            ,%
+
+,%             %%%%%%#.               %%%((((((%*            %%
+
+#%                                       %%%#                %%
+
+.%                             .%%%%%%%%%                    %#
+
+ %                         #%%%                              %
+
+ %                     %%%%                                  %*
+
+/%************/#%%%%%%######%%*                        ..,*/(%%
+
+              %%######(((((((##################%%             
+
+              %%######(((((((((((((((((((((((((%%             
+
+//////////////%%%%%%%%#########################%%/////////  ///
+\`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return phrase with default text and bouncer, with font', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase -bouncer -f="graffiti" Meme Machine'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`                            *%%%%%.                           
+
+                        %%%         %%%                        
+
+                     ,%#               %%                     
+
+                    %%                   %%                   
+
+                   %#                     %%                  
+
+                  %%                       %                  
+
+                  %(                       %%                 
+
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%                 
+
+                %#%*%#///////%# %%///////%%%%%%                
+
+               ,% %*%%******%#   %%******%(%%,%               
+
+                 %%/ %%/**%%/%%%%%%%(**#%( %%#                
+
+                  %%          %%%          %(                 
+
+                   %                      .%                  
+
+                   *%        %%%%%       .%                   
+
+                     %#                 %%                    
+
+                      .%%            .%%                       
+
+                      .%%.%%,     %%%.%%/                     
+
+                %%%%%%##%.  #%%%%%.  .%((%%%%%%               
+
+            %%#(((((((((%%,         #%%(((((((((#%%.          
+
+      %%%((((((((((((((((((%%%, .%%%((((((((((((((((((#%%*    
+
+    %%(((((((((((((((((((((((((%(((((((((((((((((((((((((#%.  
+
+  ,%(((((((((((((((((((((((((((((((((((((((((((((((((((((((%# 
+
+  %#((((((((((((((((((((((((((((((((((((((((((((((((((((((((% 
+
+  %%%%%%%%%%%%%(((((((((((((((((((((((((((((((((%%%%%%%%%%%%% 
+
+ %%            %####((((((###%%%%%%%%#(((((((((%            ,%
+
+,%             %%%%%%#.               %%%((((((%*            %%
+
+#%                                       %%%#                %%
+
+.%                             .%%%%%%%%%                    %#
+
+ %                         #%%%                              %
+
+ %                     %%%%                                  %*
+
+/%************/#%%%%%%######%%*                        ..,*/(%%
+
+              %%######(((((((##################%%             
+
+              %%######(((((((((((((((((((((((((%%             
+
+//////////////%%%%%%%%#########################%%/////////  ///
+   _____                             _____                .__    .__               
+  /     \\   ____   _____   ____     /     \\ _____    ____ |  |__ |__| ____   ____  
+ /  \\ /  \\_/ __ \\ /     \\_/ __ \\   /  \\ /  \\\\__  \\ _/ ___\\|  |  \\|  |/    \\_/ __ \\ 
+/    Y    \\  ___/|  Y Y  \\  ___/  /    Y    \\/ __ \\\\  \\___|   Y  \\  |   |  \\  ___/ 
+\\____|__  /\\___  >__|_|  /\\___  > \\____|__  (____  /\\___  >___|  /__|___|  /\\___  >
+        \\/     \\/      \\/     \\/          \\/     \\/     \\/     \\/        \\/     \\/ \`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return phrase with default text and bouncer, with font (long arg)', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase -bouncer -font="big money-se" Meme Machine'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`                            *%%%%%.                           
+
+                        %%%         %%%                        
+
+                     ,%#               %%                     
+
+                    %%                   %%                   
+
+                   %#                     %%                  
+
+                  %%                       %                  
+
+                  %(                       %%                 
+
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%                 
+
+                %#%*%#///////%# %%///////%%%%%%                
+
+               ,% %*%%******%#   %%******%(%%,%               
+
+                 %%/ %%/**%%/%%%%%%%(**#%( %%#                
+
+                  %%          %%%          %(                 
+
+                   %                      .%                  
+
+                   *%        %%%%%       .%                   
+
+                     %#                 %%                    
+
+                      .%%            .%%                       
+
+                      .%%.%%,     %%%.%%/                     
+
+                %%%%%%##%.  #%%%%%.  .%((%%%%%%               
+
+            %%#(((((((((%%,         #%%(((((((((#%%.          
+
+      %%%((((((((((((((((((%%%, .%%%((((((((((((((((((#%%*    
+
+    %%(((((((((((((((((((((((((%(((((((((((((((((((((((((#%.  
+
+  ,%(((((((((((((((((((((((((((((((((((((((((((((((((((((((%# 
+
+  %#((((((((((((((((((((((((((((((((((((((((((((((((((((((((% 
+
+  %%%%%%%%%%%%%(((((((((((((((((((((((((((((((((%%%%%%%%%%%%% 
+
+ %%            %####((((((###%%%%%%%%#(((((((((%            ,%
+
+,%             %%%%%%#.               %%%((((((%*            %%
+
+#%                                       %%%#                %%
+
+.%                             .%%%%%%%%%                    %#
+
+ %                         #%%%                              %
+
+ %                     %%%%                                  %*
+
+/%************/#%%%%%%######%%*                        ..,*/(%%
+
+              %%######(((((((##################%%             
+
+              %%######(((((((((((((((((((((((((%%             
+
+//////////////%%%%%%%%#########################%%/////////  ///
+ __       __                                          __       __                      __        __                     
+|  \\     /  \\                                        |  \\     /  \\                    |  \\      |  \\                    
+| $$\\   /  $$  ______   ______ ____    ______        | $$\\   /  $$  ______    _______ | $$____   \\$$ _______    ______  
+| $$$\\ /  $$$ /      \\ |      \\    \\  /      \\       | $$$\\ /  $$$ |      \\  /       \\| $$    \\ |  \\|       \\  /      \\ 
+| $$$$\\  $$$$|  $$$$$$\\| $$$$$$\\$$$$\\|  $$$$$$\\      | $$$$\\  $$$$  \\$$$$$$\\|  $$$$$$$| $$$$$$$\\| $$| $$$$$$$\\|  $$$$$$\\
+| $$\\$$ $$ $$| $$    $$| $$ | $$ | $$| $$    $$      | $$\\$$ $$ $$ /      $$| $$      | $$  | $$| $$| $$  | $$| $$    $$
+| $$ \\$$$| $$| $$$$$$$$| $$ | $$ | $$| $$$$$$$$      | $$ \\$$$| $$|  $$$$$$$| $$_____ | $$  | $$| $$| $$  | $$| $$$$$$$$
+| $$  \\$ | $$ \\$$     \\| $$ | $$ | $$ \\$$     \\      | $$  \\$ | $$ \\$$    $$ \\$$     \\| $$  | $$| $$| $$  | $$ \\$$     \\
+ \\$$      \\$$  \\$$$$$$$ \\$$  \\$$  \\$$  \\$$$$$$$       \\$$      \\$$  \\$$$$$$$  \\$$$$$$$ \\$$   \\$$ \\$$ \\$$   \\$$  \\$$$$$$$
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        \`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return phrase with default text and bouncer (permutation)', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase Meme Machine -bouncer'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`                            *%%%%%.                           
+
+                        %%%         %%%                        
+
+                     ,%#               %%                     
+
+                    %%                   %%                   
+
+                   %#                     %%                  
+
+                  %%                       %                  
+
+                  %(                       %%                 
+
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%                 
+
+                %#%*%#///////%# %%///////%%%%%%                
+
+               ,% %*%%******%#   %%******%(%%,%               
+
+                 %%/ %%/**%%/%%%%%%%(**#%( %%#                
+
+                  %%          %%%          %(                 
+
+                   %                      .%                  
+
+                   *%        %%%%%       .%                   
+
+                     %#                 %%                    
+
+                      .%%            .%%                       
+
+                      .%%.%%,     %%%.%%/                     
+
+                %%%%%%##%.  #%%%%%.  .%((%%%%%%               
+
+            %%#(((((((((%%,         #%%(((((((((#%%.          
+
+      %%%((((((((((((((((((%%%, .%%%((((((((((((((((((#%%*    
+
+    %%(((((((((((((((((((((((((%(((((((((((((((((((((((((#%.  
+
+  ,%(((((((((((((((((((((((((((((((((((((((((((((((((((((((%# 
+
+  %#((((((((((((((((((((((((((((((((((((((((((((((((((((((((% 
+
+  %%%%%%%%%%%%%(((((((((((((((((((((((((((((((((%%%%%%%%%%%%% 
+
+ %%            %####((((((###%%%%%%%%#(((((((((%            ,%
+
+,%             %%%%%%#.               %%%((((((%*            %%
+
+#%                                       %%%#                %%
+
+.%                             .%%%%%%%%%                    %#
+
+ %                         #%%%                              %
+
+ %                     %%%%                                  %*
+
+/%************/#%%%%%%######%%*                        ..,*/(%%
+
+              %%######(((((((##################%%             
+
+              %%######(((((((((((((((((((((((((%%             
+
+//////////////%%%%%%%%#########################%%/////////  ///
+  __  __                       __  __            _     _            
+ |  \\/  | ___ _ __ ___   ___  |  \\/  | __ _  ___| |__ (_)_ __   ___ 
+ | |\\/| |/ _ \\ '_ \` _ \\ / _ \\ | |\\/| |/ _\` |/ __| '_ \\| | '_ \\ / _ \\
+ | |  | |  __/ | | | | |  __/ | |  | | (_| | (__| | | | | | | |  __/
+ |_|  |_|\\___|_| |_| |_|\\___| |_|  |_|\\__,_|\\___|_| |_|_|_| |_|\\___|
+                                                                    \`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return phrase with default text and bouncer (silly placement)', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase Meme -bouncer Machine'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`                            *%%%%%.                           
+
+                        %%%         %%%                        
+
+                     ,%#               %%                     
+
+                    %%                   %%                   
+
+                   %#                     %%                  
+
+                  %%                       %                  
+
+                  %(                       %%                 
+
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%                 
+
+                %#%*%#///////%# %%///////%%%%%%                
+
+               ,% %*%%******%#   %%******%(%%,%               
+
+                 %%/ %%/**%%/%%%%%%%(**#%( %%#                
+
+                  %%          %%%          %(                 
+
+                   %                      .%                  
+
+                   *%        %%%%%       .%                   
+
+                     %#                 %%                    
+
+                      .%%            .%%                       
+
+                      .%%.%%,     %%%.%%/                     
+
+                %%%%%%##%.  #%%%%%.  .%((%%%%%%               
+
+            %%#(((((((((%%,         #%%(((((((((#%%.          
+
+      %%%((((((((((((((((((%%%, .%%%((((((((((((((((((#%%*    
+
+    %%(((((((((((((((((((((((((%(((((((((((((((((((((((((#%.  
+
+  ,%(((((((((((((((((((((((((((((((((((((((((((((((((((((((%# 
+
+  %#((((((((((((((((((((((((((((((((((((((((((((((((((((((((% 
+
+  %%%%%%%%%%%%%(((((((((((((((((((((((((((((((((%%%%%%%%%%%%% 
+
+ %%            %####((((((###%%%%%%%%#(((((((((%            ,%
+
+,%             %%%%%%#.               %%%((((((%*            %%
+
+#%                                       %%%#                %%
+
+.%                             .%%%%%%%%%                    %#
+
+ %                         #%%%                              %
+
+ %                     %%%%                                  %*
+
+/%************/#%%%%%%######%%*                        ..,*/(%%
+
+              %%######(((((((##################%%             
+
+              %%######(((((((((((((((((((((((((%%             
+
+//////////////%%%%%%%%#########################%%/////////  ///
+  __  __                       __  __            _     _            
+ |  \\/  | ___ _ __ ___   ___  |  \\/  | __ _  ___| |__ (_)_ __   ___ 
+ | |\\/| |/ _ \\ '_ \` _ \\ / _ \\ | |\\/| |/ _\` |/ __| '_ \\| | '_ \\ / _ \\
+ | |  | |  __/ | | | | |  __/ | |  | | (_| | (__| | | | | | | |  __/
+ |_|  |_|\\___|_| |_| |_|\\___| |_|  |_|\\__,_|\\___|_| |_|_|_| |_|\\___|
+                                                                    \`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
   it('should return phrase with Def Leppard text', async () => {
     const headers = {
       'X-Slack-Request-Timestamp': 'aoeu'
@@ -365,6 +906,25 @@ describe('Phrases', () => {
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
 
+  it('should return bad argument when given bad argument', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase -cheezeWiz Leppard'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain(`Available Commands: -font, -f, -help, -bouncer
+use \`/exyos phrase -help\` to see more options.`);
+    expect(response_type).toEqual("ephemeral");
+    expect(text).toEqual('Unknown Command: -cheezeWiz');
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+
   it('should return help', async () => {
     const headers = {
       'X-Slack-Request-Timestamp': 'aoeu'
@@ -378,6 +938,7 @@ describe('Phrases', () => {
     };
     const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
     expect(attachments[0].text).toContain(`\`/exyos phrase Phrase Here\`
+\`/exyos phrase -bouncer Not Today\`
 \`/exyos phrase -font=\"Def Leppard\" Phrase Here\`
 \`/exyos phrase -f=\"Def Leppard\" Phrase Here\`
 Available Fonts: 1Row, 3-D, 3D Diagonal, 3D-ASCII, 3x5, 4Max, 5 Line Oblique, AMC 3 Line, AMC 3 Liv1, AMC AAA01, AMC Neko, AMC Razor, AMC Razor2, AMC Slash, AMC Slider, AMC Thin, AMC Tubes, AMC Untitled, ANSI Shadow, ASCII New Roman, Abraxis-Big, Abraxis-Small, Acrobatic, Alligator, Alligator2, Alpha, Alphabet, Arrows, Avatar, Banner, Banner3, Banner3-D, Banner4, Barbwire, Basic, Bear, Bell, Benjamin, Bent, Big, Big Chief, Big Money-ne, Big Money-nw, Big Money-se, Big Money-sw, Bigfig, Binary, Blest, Block, Blocks, Bloody, Boie, Boie2, Bolger, Bone's Font, Braced, Bright, Broadway, Broadway KB, Bubble, Bulbhead, CaMiZ, Caligraphy, Caligraphy2, Calvin S, Cards, Catwalk, CeA, CeA2, Cheese, Chiseled, Chunky, Coinstak, Cola, Colossal, Computer, Contessa, Contrast, Cosmike, Crawford, Crawford2, Crazy, Cricket, Cursive, Cyberlarge, Cybermedium, Cybersmall, Cygnet, DANC4, DWhistled, DaiR, Dancing Font, Decimal, Def Leppard, Delta Corps Priest 1, Diamond, Diet Cola, Digital, Doh, Doom, Dot Matrix, Double, Double Shorts, Dr Pepper, Efti Chess, Efti Font, Efti Italic, Efti Piti, Efti Robot, Efti Wall, Efti Water, Electronic, Elite, Epic, Fender, Filter, Filth, Fire Font-k, Fire Font-s, Flipped, Flower Power, FoGG, Four Tops, Fraktur, Fun Face, Fun Faces, Fuzzy, Galactus, Georgi16, Georgia11, Ghost, Ghoulish, Glenyn, Glue, Goofy, Gothic, Graceful, Gradient, Graffiti, Greek, HeX's Font, Heart Left, Heart Right, Hellfire, Henry 3D, Hex, Hieroglyphs, Hollywood, Horizontal Left, Horizontal Right, ICL-1900, Impossible, Invita, Isometric1, Isometric2, Isometric3, Isometric4, Italic, Ivrit, JS Block Letters, JS Bracket Letters, JS Capital Curves, JS Cursive, JS Stick Letters, Jacky, Jazmine, Jerusalem, Katakana, Kban, Keyboard, Knob, LCD, Larry 3D, Lean, Letters, Lil Devil, Line Blocks, Linux, Lockergnome, Madrid, Marquee, Maxfour, MeDi, Mer, Merlin1, Merlin2, Mike, Mini, Mirror, Mnemonic, Modular, Morse, Moscow, Mshebrew210, Muzzle, NScript, NT Greek, NV Script, Nancyj, Nancyj-Fancy, Nancyj-Underlined, Nipples, O8, OS2, Octal, Ogre, Old Banner, Patorjk's Cheese, Patorjk-HeX, Pawp, Peaks, Peaks Slant, Pebbles, Pepper, Poison, PsY, PsY2, Puffy, Puzzle, Pyramid, Rammstein, Rectangles, Reeko Font 1, Relief, Relief2, Reverse, Ribbit, Ribbit2, Ribbit3, Roman, Rotated, Rounded, Rowan Cap, Rozzo, Runic, Runyc, S Blood, SL Script, Santa Clara, Script, Serifcap, Shadow, Shimrod, Short, Slant, Slant Relief, Slide, Small, Small Caps, Small Isometric1, Small Keyboard, Small Poison, Small Script, Small Shadow, Small Slant, Small Tengwar, Soft, Sony, Speed, Spliff, Stacey, Stampate, Stampatello, Standard, Star Strips, Star Wars, Stellar, Stforek, Stick Letters, Stop, Straight, Stronger Than All, Sub-Zero, Swamp Land, Swan, Sweet, THIS, TRaC, TRaC Mini, TRaC Tiny, TRaC's Old School Font, Tanja, Tengwar, Term, Test1, The Edge, Thick, Thin, Thorned, Three Point, Ticks, Ticks Slant, Tiles, Tinker-Toy, Tombstone, Train, Trek, Tsalagi, Tubular, Twiggy, Twisted, Two Point, USA Flag, Univers, Varsity, Wavy, Weird, Wet Letter, Whimsy, Wow, X-Pose, X99, X992, Zodi`);

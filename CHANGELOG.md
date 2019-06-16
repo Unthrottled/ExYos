@@ -1,5 +1,12 @@
 Changelog
 ---
+## 1.4.0
+
+- Added ASCII art option to the `phrase` command!
+  - Usage: 
+    - `/exyos phrase -bouncer`
+    - `/exyos phrase -bouncer Not Today`
+
 ## 1.3.2
 - Installed personality module.
     - ExYos has some clever things to say in response to your request.
