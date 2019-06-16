@@ -40,6 +40,29 @@ describe('Phrases', () => {
                                                                     \`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
+  it('should return phrase with default text and bouncer', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: 'phrase -bouncer Meme Machine'
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`  __  __                       __  __            _     _            
+ |  \\/  | ___ _ __ ___   ___  |  \\/  | __ _  ___| |__ (_)_ __   ___ 
+ | |\\/| |/ _ \\ '_ \` _ \\ / _ \\ | |\\/| |/ _\` |/ __| '_ \\| | '_ \\ / _ \\
+ | |  | |  __/ | | | | |  __/ | |  | | (_| | (__| | | | | | | |  __/
+ |_|  |_|\\___|_| |_| |_|\\___| |_|  |_|\\__,_|\\___|_| |_|_|_| |_|\\___|
+                                                                    \`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
   it('should return phrase with Def Leppard text', async () => {
     const headers = {
       'X-Slack-Request-Timestamp': 'aoeu'
