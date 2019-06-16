@@ -125,18 +125,22 @@ const getArt = (artType: string): string => {
 export const phraseCommand: Command = userArguments => {
   return extractArguments(sanitizeArguments(userArguments)).then(({font, phrase, art}) =>
       new Promise((resolve, reject) => {
-        figlet.text(phrase, {
-          ...(font ? {font} : {}),
-          horizontalLayout: 'default',
-          verticalLayout: 'default',
-        }, (error, translatedPhrase) => {
-          if (error) {
-            console.error(error);
-            reject(error);
-          } else {
-            resolve(translatedPhrase);
-          }
-        });
+        if(phrase){
+          figlet.text(phrase, {
+            ...(font ? {font} : {}),
+            horizontalLayout: 'default',
+            verticalLayout: 'default',
+          }, (error, translatedPhrase) => {
+            if (error) {
+              console.error(error);
+              reject(error);
+            } else {
+              resolve(translatedPhrase);
+            }
+          });
+        } else {
+          resolve('');
+        }
       }).then(phrase => `${getArt(art)}${phrase}`))
       .then(phrase => `\`\`\`${phrase}\`\`\``);
 };
