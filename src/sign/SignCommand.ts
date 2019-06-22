@@ -8,35 +8,36 @@ const padding = Array(SIGN_PADDING).fill('').map(() => ' ').join('');
 const signStartPadding = '|' + padding;
 const signWidths = [
   {
-    predicate: numberCharacters => numberCharacters < 15,
+    predicate: (numberCharacters, maxWord) => numberCharacters < 15 ||
+      (maxWord < 15 && numberCharacters < 25),
     value: 15,
   },
   {
-    predicate: numberCharacters => numberCharacters < 20,
+    predicate: (numberCharacters, _) => numberCharacters < 20,
     value: 20, // todo: handle big words
   },
   {
-    predicate: numberCharacters => numberCharacters < 50,
+    predicate: (numberCharacters, _) => numberCharacters < 50,
     value: 25,
   },
   {
-    predicate: numberCharacters => numberCharacters < 200,
+    predicate: (numberCharacters, _) => numberCharacters < 200,
     value: 50,
   },
   {
-    predicate: numberCharacters => numberCharacters <= 400,
+    predicate: (numberCharacters, _) => numberCharacters <= 400,
     value: 75,
   },
   {
-    predicate: numberCharacters => numberCharacters > 400,
+    predicate: (numberCharacters, _) => numberCharacters > 400,
     value: 100,
   },
 ];
-const findMaxSignWidth = phraseLength =>
-  signWidths.find(signWidth => signWidth.predicate(phraseLength)).value;
+const findMaxSignWidth = (phraseLength, maxWordSize: number) =>
+  signWidths.find(signWidth => signWidth.predicate(phraseLength, maxWordSize)).value;
 
 const constructSentences = (max, words, length) => {
-  const signWidth = findMaxSignWidth(length);
+  const signWidth = findMaxSignWidth(length, max);
   const {sentences, currentSentence} =
     words.reduce((accum, word) => {
       const wordLength = word.length;

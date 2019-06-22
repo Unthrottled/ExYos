@@ -1,4 +1,4 @@
-import Bouncer from "./Bouncer";
+import Bouncer from './Bouncer';
 const figlet = require('figlet/lib/node-figlet.js');
 import {Command} from '../Command';
 import CommandError from '../CommandError';
@@ -139,7 +139,7 @@ const getArt = (artType: string): string => {
 export const phraseCommand: Command = userArguments => {
   return extractArguments(sanitizeArguments(userArguments)).then(({font, phrase, art}) =>
       new Promise((resolve, reject) => {
-        if(phrase){
+        if (phrase) {
           figlet.text(phrase, {
             ...(font ? {font} : {}),
             horizontalLayout: 'default',
@@ -155,6 +155,6 @@ export const phraseCommand: Command = userArguments => {
         } else {
           resolve('');
         }
-      }).then(phrase => `${getArt(art)}${phrase}`))
+      }).then(createdPhrase => `${getArt(art)}${createdPhrase}`))
       .then(phrase => `\`\`\`${phrase}\`\`\``);
 };
