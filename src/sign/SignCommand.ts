@@ -8,8 +8,12 @@ const padding = Array(SIGN_PADDING).fill('').map(() => ' ').join('');
 const signStartPadding = '|' + padding;
 const signWidths = [
   {
-    predicate: numberCharacters => numberCharacters < 25,
+    predicate: numberCharacters => numberCharacters < 15,
     value: 15,
+  },
+  {
+    predicate: numberCharacters => numberCharacters < 20,
+    value: 20, // todo: handle big words
   },
   {
     predicate: numberCharacters => numberCharacters < 50,
@@ -62,23 +66,40 @@ const constructSentences = (max, words, length) => {
   };
 };
 
-const renderSign = phrase => {
-  const {max, words, length} =
-    phrase.split(' ').reduce((accum, word) => {
-      const wordLength = word.length;
-      if (wordLength > accum.max) {
-        accum.max = wordLength;
-      }
-      accum.words.push(word);
-      accum.length += wordLength;
-      return accum;
-    }, {
-      max: 0,
-      length: 0,
-      words: [],
-    });
+const constructSignMessage = (phrases) => {
+  return phrases.map(phrase => {
+    const {max, words, length} =
+      phrase.split(' ').reduce((accum, word) => {
+        const wordLength = word.length;
+        if (wordLength > accum.max) {
+          accum.max = wordLength;
+        }
+        accum.words.push(word);
+        accum.length += wordLength;
+        return accum;
+      }, {
+        max: 0,
+        length: 0,
+        words: [],
+      });
 
-  const {sentences, signWidth} = constructSentences(max, words, length);
+    return constructSentences(max, words, length);
+  }).reduce((accum, constructedSentence) => {
+    accum.sentences = [
+      ...accum.sentences,
+      ...constructedSentence.sentences,
+    ];
+    accum.signWidth = Math.max(accum.signWidth, constructedSentence.signWidth);
+    return accum;
+  }, {
+    sentences: [],
+    signWidth: 0,
+  });
+};
+
+const renderSign = phrase => {
+  const newLinePhrases = phrase.split('\n');
+  const {sentences, signWidth } = constructSignMessage(newLinePhrases);
   const paddedSignTopper = Array(signWidth + SIGN_PADDING * 2)
     .fill('').map(() => '_').join('');
   const maxSentenceLength = paddedSignTopper.length;

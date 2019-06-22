@@ -32,13 +32,113 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
+      `\`\`\`________________________
+|  TURN DOWN FOR WHAT? |
+________________________
+    (\\__/) ||
+    (•ㅅ•) ||
+    / 　 づ
+\`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return sign bunny when given a quote', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: `sign Hold onto my beer
+- Some Guy`
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
       `\`\`\`___________________
-|  TURN DOWN FOR  |
-|  WHAT?          |
+|  HOLD ONTO MY   |
+|  BEER           |
+|  - SOME GUY     |
 ___________________
  (\\__/) ||
  (•ㅅ•) ||
  / 　 づ
+\`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return sign bunny when given 4 line breaks', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: `sign shots
+shots
+shots
+shots`
+      }
+    };
+    const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`___________________
+|  SHOTS          |
+|  SHOTS          |
+|  SHOTS          |
+|  SHOTS          |
+___________________
+ (\\__/) ||
+ (•ㅅ•) ||
+ / 　 づ
+\`\`\``);
+    expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+  });
+  it('should return sign bunny recursion', async () => {
+    const headers = {
+      'X-Slack-Request-Timestamp': 'aoeu'
+    };
+    const request = {
+      header: header => headers[header],
+      body: {
+        ...BASE_REQUEST,
+        text: `sign ___________________
+|  SHOTS          |
+|  SHOTS          |
+|  SHOTS          |
+|  SHOTS          |
+___________________
+ (\\__/) ||
+ (•ㅅ•) ||
+ / 　 づ`
+      }
+    };
+    const {exyosResponse: {attachments, response_type, text}, slackUrl} = await generateResponse(request);
+    expect(attachments[0].text).toContain('<@U2147483697>');
+    expect(response_type).toEqual("in_channel");
+    expect(text).toEqual(
+      `\`\`\`________________________
+|  ___________________ |
+|  |  SHOTS            |
+|  |                   |
+|  |  SHOTS            |
+|  |                   |
+|  |  SHOTS            |
+|  |                   |
+|  |  SHOTS            |
+|  |                   |
+|  ___________________ |
+|  (\\__/) ||           |
+|  (•ㅅ•) ||            |
+|  / 　 づ               |
+________________________
+    (\\__/) ||
+    (•ㅅ•) ||
+    / 　 づ
 \`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
