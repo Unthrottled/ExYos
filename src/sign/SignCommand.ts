@@ -8,8 +8,12 @@ const padding = Array(SIGN_PADDING).fill('').map(() => ' ').join('');
 const signStartPadding = '|' + padding;
 const signWidths = [
   {
-    predicate: numberCharacters => numberCharacters < 25,
+    predicate: numberCharacters => numberCharacters < 15,
     value: 15,
+  },
+  {
+    predicate: numberCharacters => numberCharacters < 20,
+    value: 20, // todo: handle big words
   },
   {
     predicate: numberCharacters => numberCharacters < 50,
@@ -84,7 +88,6 @@ const constructSignMessage = (phrases) => {
     accum.sentences = [
       ...accum.sentences,
       ...constructedSentence.sentences,
-      ...(accum.signWidth > 0 ? [' '] : []),
     ];
     accum.signWidth = Math.max(accum.signWidth, constructedSentence.signWidth);
     return accum;
