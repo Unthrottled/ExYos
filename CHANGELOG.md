@@ -1,5 +1,25 @@
 Changelog
 ---
+## 1.4.1
+
+- Sign command handles newlines in the input better!
+    - `/exyos sign shots
+              shots
+              shots
+              shots`
+ ```$xslt
+___________________
+|  SHOTS          |
+|  SHOTS          |
+|  SHOTS          |
+|  SHOTS          |
+___________________
+ (\__/) ||
+ (•ㅅ•) ||
+ / 　 づ
+```      
+              
+
 ## 1.4.0
 
 - Added ASCII art option to the `phrase` command!
