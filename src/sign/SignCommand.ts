@@ -62,23 +62,41 @@ const constructSentences = (max, words, length) => {
   };
 };
 
-const renderSign = phrase => {
-  const {max, words, length} =
-    phrase.split(' ').reduce((accum, word) => {
-      const wordLength = word.length;
-      if (wordLength > accum.max) {
-        accum.max = wordLength;
-      }
-      accum.words.push(word);
-      accum.length += wordLength;
-      return accum;
-    }, {
-      max: 0,
-      length: 0,
-      words: [],
-    });
+const constructSignMessage = (phrases) => {
+  return phrases.map(phrase => {
+    const {max, words, length} =
+      phrase.split(' ').reduce((accum, word) => {
+        const wordLength = word.length;
+        if (wordLength > accum.max) {
+          accum.max = wordLength;
+        }
+        accum.words.push(word);
+        accum.length += wordLength;
+        return accum;
+      }, {
+        max: 0,
+        length: 0,
+        words: [],
+      });
 
-  const {sentences, signWidth} = constructSentences(max, words, length);
+    return constructSentences(max, words, length);
+  }).reduce((accum, constructedSentence) => {
+    accum.sentences = [
+      ...accum.sentences,
+      ...constructedSentence.sentences,
+      ...(accum.signWidth > 0 ? [' '] : []),
+    ];
+    accum.signWidth = Math.max(accum.signWidth, constructedSentence.signWidth);
+    return accum;
+  }, {
+    sentences: [],
+    signWidth: 0,
+  });
+};
+
+const renderSign = phrase => {
+  const newLinePhrases = phrase.split('\n');
+  const {sentences, signWidth } = constructSignMessage(newLinePhrases);
   const paddedSignTopper = Array(signWidth + SIGN_PADDING * 2)
     .fill('').map(() => '_').join('');
   const maxSentenceLength = paddedSignTopper.length;
