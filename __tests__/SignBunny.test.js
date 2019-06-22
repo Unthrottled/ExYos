@@ -32,13 +32,12 @@ describe('Sign Bunny', () => {
     expect(attachments[0].text).toContain('<@U2147483697>');
     expect(response_type).toEqual("in_channel");
     expect(text).toEqual(
-      `\`\`\`___________________
-|  TURN DOWN FOR  |
-|  WHAT?          |
-___________________
- (\\__/) ||
- (•ㅅ•) ||
- / 　 づ
+      `\`\`\`________________________
+|  TURN DOWN FOR WHAT? |
+________________________
+    (\\__/) ||
+    (•ㅅ•) ||
+    / 　 づ
 \`\`\``);
     expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
   });
