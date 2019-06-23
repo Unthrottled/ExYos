@@ -6,7 +6,7 @@ import {
   COOL,
   getFace,
   HAPPY,
-  LENNY, PRETTY,
+  LENNY, LOOK, PRETTY,
   PUPPY,
   RAGE,
   SMILE,
@@ -66,6 +66,7 @@ const AVAILABLE_COMMANDS = [
   '-puppy',
   '-strained',
   '-pretty',
+  '-look',
   '-deadpan',
   '-help',
 ];
@@ -93,6 +94,8 @@ const actuallyParseArguments = flipArgumentToParse => {
       builtArguments.face = {type: ANGUISH};
     } else if (currentString === '-smile') {
       builtArguments.face = {type: SMILE};
+    } else if (currentString === '-look') {
+      builtArguments.face = {type: LOOK};
     } else if (currentString === '-happy') {
       builtArguments.face = {type: HAPPY};
     } else if (currentString === '-deadpan') {

@@ -2,7 +2,7 @@ Changelog
 ---
 ## 1.5.0
 
-- More flip facial expressions!
+- More flip expressions!
     - `/exyos flip -look -table` (╯ఠ_ఠ)╯︵┻━┻
     - `/exyos flip -deadpan -table` (╯●_●)╯︵┻━┻
     - `/exyos flip -solemn -table` (╯º _ º)╯︵┻━┻

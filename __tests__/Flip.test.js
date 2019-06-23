@@ -220,6 +220,24 @@ describe('Flip Command', () => {
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
+    it('should return flipped table when given just a face argument: look', async () => {
+      const headers = {
+        'X-Slack-Request-Timestamp': 'aoeu'
+      };
+      const request = {
+        header: header => headers[header],
+        body: {
+          ...BASE_REQUEST,
+          'text': 'flip -look'
+        }
+      };
+      const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
+      expect(attachments[0].text).toContain('<@U2147483697>');
+      expect(response_type).toEqual("in_channel");
+      expect(text).toEqual('(╯ಠ_ಠ)╯︵┻━┻');
+      expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
+    });
+
     it('should return flipped table when given just a face argument: strained', async () => {
       const headers = {
         'X-Slack-Request-Timestamp': 'aoeu'
