@@ -5,7 +5,7 @@ Changelog
 - More flip facial expressions!
     - `/exyos flip -look -table` (╯ఠ_ఠ)╯︵┻━┻
     - `/exyos flip -deadpan -table` (╯●_●)╯︵┻━┻
-    - `/exyos flip -solumn -table` (╯º _ º)╯︵┻━┻
+    - `/exyos flip -solemn -table` (╯º _ º)╯︵┻━┻
     - `/exyos flip -lenny -table` (╯͡° ͜ʖ ͡°)╯︵┻━┻
     - `/exyos flip -anguish -table` (╯ಥ_ಥ)╯︵┻━┻
     - `/exyos flip -smile -table` (╯◕ ◡ ◕)╯︵┻━┻
