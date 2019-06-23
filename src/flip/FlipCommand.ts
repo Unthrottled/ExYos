@@ -13,7 +13,7 @@ import {
   SOLEMN,
   STRAINED,
   U_CANT_BE_SRS,
-  YELLING
+  YELLING,
 } from '../Faces';
 import {PERSON, PHRASE, TABLE} from './FlipableItems';
 import {flipWord} from './WordFlip';
