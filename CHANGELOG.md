@@ -1,5 +1,20 @@
 Changelog
 ---
+## 1.5.0
+
+- More flip facial expressions!
+    - `/exyos flip -look -table` (╯ఠ_ఠ)╯︵┻━┻
+    - `/exyos flip -deadpan -table` (╯●_●)╯︵┻━┻
+    - `/exyos flip -solumn -table` (╯º _ º)╯︵┻━┻
+    - `/exyos flip -lenny -table` (╯͡° ͜ʖ ͡°)╯︵┻━┻
+    - `/exyos flip -anguish -table` (╯ಥ_ಥ)╯︵┻━┻
+    - `/exyos flip -smile -table` (╯◕ ◡ ◕)╯︵┻━┻
+    - `/exyos flip -happy -table` (╯ᐛ)╯︵┻━┻
+    - `/exyos flip -pretty -table` (╯✿◕‿◕)╯︵┻━┻
+    - `/exyos flip -cool -table` (╯-■_■)╯︵┻━┻
+    - `/exyos flip -strained -table` (╯‶⇀‸↼)╯彡┻━┻
+    - `/exyos flip -puppy -table` (╯•ᴥ•)╯︵┻━┻
+
 ## 1.4.1
 
 - Sign command handles newlines in the input better!
