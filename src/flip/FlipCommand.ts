@@ -1,6 +1,20 @@
 import {Command} from '../Command';
 import CommandError from '../CommandError';
-import {ALARMED, getFace, RAGE, YELLING} from '../Faces';
+import {
+  ALARMED,
+  ANGUISH,
+  COOL,
+  getFace,
+  HAPPY,
+  LENNY, PRETTY,
+  PUPPY,
+  RAGE,
+  SMILE,
+  SOLEMN,
+  STRAINED,
+  U_CANT_BE_SRS,
+  YELLING,
+} from '../Faces';
 import {PERSON, PHRASE, TABLE} from './FlipableItems';
 import {flipWord} from './WordFlip';
 
@@ -40,7 +54,21 @@ const getFlippedItem = item => {
   }
 };
 
-const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
+const AVAILABLE_COMMANDS = [
+  '-table',
+  '-rage',
+  '-alarmed',
+  '-lenny',
+  '-anguish',
+  '-smile',
+  '-happy',
+  '-cool',
+  '-puppy',
+  '-strained',
+  '-pretty',
+  '-deadpan',
+  '-help',
+];
 
 function getAvailableArgumentsString() {
   return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
@@ -57,6 +85,27 @@ const actuallyParseArguments = flipArgumentToParse => {
     } else if (currentString === '-alarmed') {
       builtArguments.velocity = {type: FORCEFUL_VELOCITY};
       builtArguments.face = {type: ALARMED};
+    } else if (currentString === '-solemn') {
+      builtArguments.face = {type: SOLEMN};
+    } else if (currentString === '-lenny') {
+      builtArguments.face = {type: LENNY};
+    } else if (currentString === '-anguish') {
+      builtArguments.face = {type: ANGUISH};
+    } else if (currentString === '-smile') {
+      builtArguments.face = {type: SMILE};
+    } else if (currentString === '-happy') {
+      builtArguments.face = {type: HAPPY};
+    } else if (currentString === '-deadpan') {
+      builtArguments.face = {type: U_CANT_BE_SRS};
+    } else if (currentString === '-pretty') {
+      builtArguments.face = {type: PRETTY};
+    } else if (currentString === '-cool') {
+      builtArguments.face = {type: COOL};
+    } else if (currentString === '-puppy') {
+      builtArguments.face = {type: PUPPY};
+    } else if (currentString === '-strained') {
+      builtArguments.velocity = {type: FORCEFUL_VELOCITY};
+      builtArguments.face = {type: STRAINED};
     } else if (currentString === '-help') {
       throw new CommandError(`Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {

@@ -694,7 +694,7 @@ describe('ResponseGenerator', () => {
         }
       };
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
-      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage, -alarmed, -help');
+      expect(attachments[0].text).toEqual('Available Arguments: -table, -rage, -alarmed, -lenny, -anguish, -smile, -happy, -cool, -puppy, -strained, -pretty, -deadpan, -help');
       expect(response_type).toEqual("ephemeral");
       expect(text).toEqual('Unknown Argument: -loaded-god-complex-cock-it-and-pull-it');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
