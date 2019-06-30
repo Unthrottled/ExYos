@@ -2,6 +2,8 @@ Changelog
 ---
 
 ## 1.6.0
+- Grammar is hard fixed a typo in one of the the identifying message
+    - `@Steve spent to long thinking about sending this.` -> `@Steve spent too long thinking about sending this.`
 - More UnFlip Expressions!
     - `/exyos unflip -solemn` ┳━┳ノ(º _ ºノ)
     - `/exyos unflip -anguish` ┳━┳ノ(ಥ_ಥノ)
