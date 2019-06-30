@@ -1,5 +1,22 @@
 Changelog
 ---
+
+## 1.6.0
+- Grammar is hard fixed a typo in one of the the identifying message
+    - `@Steve spent to long thinking about sending this.` -> `@Steve spent too long thinking about sending this.`
+- More UnFlip Expressions!
+    - `/exyos unflip -solemn` ┳━┳ノ(º _ ºノ)
+    - `/exyos unflip -anguish` ┳━┳ノ(ಥ_ಥノ)
+    - `/exyos unflip -lenny` ┳━┳ノ(͡° ͜ʖ ͡°ノ)
+    - `/exyos unflip -smile` ┳━┳ノ(◕ ◡ ◕ノ)
+    - `/exyos unflip -happy` ┳━┳ノ(ᐖノ)
+    - `/exyos unflip -cool` ┳━┳ノ(■_■-ノ)
+    - `/exyos unflip -puppy` ┳━┳ノ(•ᴥ•ノ)
+    - `/exyos unflip -pretty` ┳━┳ノ(◕‿◕✿ノ)
+    - `/exyos unflip -deadpan` ┳━┳ノ(●_●ノ)
+    - `/exyos unflip -look` ┳━┳ノ(ಠ_ಠノ)
+    - `/exyos unflip -strained` ┳━┳ノ(⇀‸↼‶ノ)
+
 ## 1.5.0
 
 - More flip expressions!

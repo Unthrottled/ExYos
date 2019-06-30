@@ -1,9 +1,36 @@
 import {Command} from '../Command';
 import CommandError from '../CommandError';
-import {ALARMED, getFace, RAGE, SOLEMN} from '../Faces';
+import {
+  ALARMED,
+  ANGUISH,
+  COOL, COOL_LEFT,
+  getFace,
+  HAPPY, HAPPY_LEFT,
+  LENNY,
+  LOOK,
+  PRETTY, PRETTY_LEFT, PUPPY,
+  RAGE,
+  SMILE,
+  SOLEMN, STRAINED, STRAINED_LEFT,
+  U_CANT_BE_SRS,
+} from '../Faces';
 import {PERSON, PHRASE, TABLE} from './FlipableItems';
 
-const AVAILABLE_COMMANDS = ['-table', '-rage', '-alarmed', '-help'];
+const AVAILABLE_COMMANDS = [
+  '-table',
+  '-rage',
+  '-alarmed',
+  '-lenny',
+  '-anguish',
+  '-smile',
+  '-happy',
+  '-cool',
+  '-puppy',
+  '-strained',
+  '-pretty',
+  '-look',
+  '-deadpan',
+  '-help'];
 
 function getAvailableArgumentsString() {
   return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
@@ -18,7 +45,29 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
       builtArguments.face = {type: RAGE};
     } else if (currentString === '-alarmed') {
       builtArguments.face = {type: ALARMED};
-    } else if (currentString === '-help') {
+    } else if (currentString === '-solemn') {
+      builtArguments.face = {type: SOLEMN};
+    } else if (currentString === '-lenny') {
+      builtArguments.face = {type: LENNY};
+    } else if (currentString === '-anguish') {
+      builtArguments.face = {type: ANGUISH};
+    } else if (currentString === '-smile') {
+      builtArguments.face = {type: SMILE};
+    } else if (currentString === '-look') {
+      builtArguments.face = {type: LOOK};
+    } else if (currentString === '-happy') {
+      builtArguments.face = {type: HAPPY_LEFT};
+    } else if (currentString === '-deadpan') {
+      builtArguments.face = {type: U_CANT_BE_SRS};
+    } else if (currentString === '-pretty') {
+      builtArguments.face = {type: PRETTY_LEFT};
+    } else if (currentString === '-cool') {
+      builtArguments.face = {type: COOL_LEFT};
+    } else if (currentString === '-puppy') {
+      builtArguments.face = {type: PUPPY};
+    } else if (currentString === '-strained') {
+      builtArguments.face = {type: STRAINED_LEFT};
+    }  else if (currentString === '-help') {
       throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {
       throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString());
