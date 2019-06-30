@@ -3,15 +3,15 @@ import CommandError from '../CommandError';
 import {
   ALARMED,
   ANGUISH,
-  COOL,
+  COOL, COOL_LEFT,
   getFace,
-  HAPPY,
+  HAPPY, HAPPY_LEFT,
   LENNY,
   LOOK,
-  PRETTY, PUPPY,
+  PRETTY, PRETTY_LEFT, PUPPY,
   RAGE,
   SMILE,
-  SOLEMN, STRAINED,
+  SOLEMN, STRAINED, STRAINED_LEFT,
   U_CANT_BE_SRS,
 } from '../Faces';
 import {PERSON, PHRASE, TABLE} from './FlipableItems';
@@ -56,17 +56,17 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
     } else if (currentString === '-look') {
       builtArguments.face = {type: LOOK};
     } else if (currentString === '-happy') {
-      builtArguments.face = {type: HAPPY};
+      builtArguments.face = {type: HAPPY_LEFT};
     } else if (currentString === '-deadpan') {
       builtArguments.face = {type: U_CANT_BE_SRS};
     } else if (currentString === '-pretty') {
-      builtArguments.face = {type: PRETTY};
+      builtArguments.face = {type: PRETTY_LEFT};
     } else if (currentString === '-cool') {
-      builtArguments.face = {type: COOL};
+      builtArguments.face = {type: COOL_LEFT};
     } else if (currentString === '-puppy') {
       builtArguments.face = {type: PUPPY};
     } else if (currentString === '-strained') {
-      builtArguments.face = {type: STRAINED};
+      builtArguments.face = {type: STRAINED_LEFT};
     }  else if (currentString === '-help') {
       throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {

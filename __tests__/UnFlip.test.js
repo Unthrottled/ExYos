@@ -143,7 +143,7 @@ describe('Flip Command', () => {
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
       expect(attachments[0].text).toContain('<@U2147483697>');
       expect(response_type).toEqual("in_channel");
-      expect(text).toEqual('┳━┳ノ(ᐛノ)');
+      expect(text).toEqual('┳━┳ノ(ᐖノ)');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
@@ -161,7 +161,7 @@ describe('Flip Command', () => {
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
       expect(attachments[0].text).toContain('<@U2147483697>');
       expect(response_type).toEqual("in_channel");
-      expect(text).toEqual('┳━┳ノ(-■_■ノ)');
+      expect(text).toEqual('┳━┳ノ(■_■-ノ)');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
@@ -197,7 +197,7 @@ describe('Flip Command', () => {
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
       expect(attachments[0].text).toContain('<@U2147483697>');
       expect(response_type).toEqual("in_channel");
-      expect(text).toEqual('┳━┳ノ(✿◕‿◕ノ)');
+      expect(text).toEqual('┳━┳ノ(◕‿◕✿ノ)');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
@@ -251,7 +251,7 @@ describe('Flip Command', () => {
       const {exyosResponse : { attachments, response_type, text }, slackUrl} = await generateResponse(request);
       expect(attachments[0].text).toContain('<@U2147483697>');
       expect(response_type).toEqual("in_channel");
-      expect(text).toEqual('┳━┳ノ(‶⇀‸↼ノ)');
+      expect(text).toEqual('┳━┳ノ(⇀‸↼‶ノ)');
       expect(slackUrl).toEqual('https://hooks.slack.com/commands/1234/5678');
     });
 
