@@ -4,7 +4,7 @@ const MessageDictonary = [
   'Totally original response from %name%.',
   '%name% wanted you to see this.',
   '%name%\'s attempt at being funny.',
-  '%name% spent to long thinking about sending this.',
+  '%name% spent too long thinking about sending this.',
   'What did you say to %name%?',
   'Did you know %name% does not have anything better to do?',
   '%name% smashes the keys a bit too hard.',
