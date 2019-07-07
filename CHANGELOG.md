@@ -7,7 +7,7 @@ Changelog
     - Currently Support's `Sign Bunny`
         
                 curl --request POST \
-                  --url https://exyos.acari.io/prd/api/sign-bunny \
+                  --url https://exyos.acari.io/api/sign-bunny \
                   --header 'content-type: application/json' \
                   --data '{
                     "signWords": "Existence is pain"
