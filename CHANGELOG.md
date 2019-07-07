@@ -1,6 +1,18 @@
 Changelog
 ---
 
+## 2.0.0
+
+- External API Availability!!
+    - Currently Support's `Sign Bunny`
+        
+                curl --request POST \
+                  --url https://exyos.acari.io/prd/api/sign-bunny \
+                  --header 'content-type: application/json' \
+                  --data '{
+                    "signWords": "Existence is pain"
+                }'
+
 ## 1.6.0
 - Grammar is hard fixed a typo in one of the the identifying message
     - `@Steve spent to long thinking about sending this.` -> `@Steve spent too long thinking about sending this.`
