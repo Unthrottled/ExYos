@@ -1,10 +1,10 @@
-import {signCommand} from '../../sign/SignCommand';
+import {signCommand, signCommandNonMarkdown} from '../../sign/SignCommand';
 import teapot from '../../Teapot';
 
 const processRequest = (request): Promise<string> => {
   const signWords = (request && request.body || {}).signWords;
   if (signWords) {
-    return signCommand(signWords);
+    return signCommandNonMarkdown(signWords);
   } else {
     return Promise.reject();
   }

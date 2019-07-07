@@ -130,12 +130,23 @@ const renderSignBunny = phrase => {
     .map(bunnyPart => `${bunnyPadding}${bunnyPart}`)
     .join('');
   const signBunny =
-    `\`\`\`${sign}
-${bunny}\`\`\``;
+    `${sign}
+${bunny}`;
   return Promise.resolve(signBunny);
 };
 
+const renderSignBunnyMarkdown = (phrase: string): Promise<string> => {
+  return renderSignBunny(phrase).then(bunny => {
+    return `\`\`\`${bunny}\`\`\``;
+  });
+};
+
 export const signCommand: Command = userArguments => {
+  const phrase = userArguments || defaultPhrase;
+  return renderSignBunnyMarkdown(phrase.toLocaleUpperCase());
+};
+
+export const signCommandNonMarkdown: Command = userArguments => {
   const phrase = userArguments || defaultPhrase;
   return renderSignBunny(phrase.toLocaleUpperCase());
 };
