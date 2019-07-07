@@ -1,5 +1,5 @@
 import teapot from '../Teapot';
-import commandHandler from './sign/CommandHandler';
+import commandHandler from './sign/SignCommandHandler';
 
 const serverless = require('serverless-http');
 const express = require('express');

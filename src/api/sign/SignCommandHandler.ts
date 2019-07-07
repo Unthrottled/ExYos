@@ -1,7 +1,7 @@
 import {signCommand, signCommandNonMarkdown} from '../../sign/SignCommand';
 import teapot from '../../Teapot';
 
-const processRequest = (request): Promise<string> => {
+export const processSignBodyRequest = (request): Promise<string> => {
   const signWords = (request && request.body || {}).signWords;
   if (signWords) {
     return signCommandNonMarkdown(signWords);
@@ -11,7 +11,7 @@ const processRequest = (request): Promise<string> => {
 };
 
 const handler = (request, response) => {
-  processRequest(request).then(responseBody => {
+  processSignBodyRequest(request).then(responseBody => {
     response.set('Content-Type', 'text/plain');
     response.status(200)
       .send(responseBody);
@@ -19,7 +19,7 @@ const handler = (request, response) => {
     .catch(() => {
       response.set('Content-Type', 'text/plain');
       response.status(400).end(`
-      Expected request body of:
+      Expected example request body of:
         {
           signWords: "Turn down for what?"
         }
