@@ -26,14 +26,14 @@ custom:
 
 # The `functions` block defines what code to deploy
 functions:
-  signBunnyAPI:
-    handler: src/api/sign/index.handler
+  API:
+    handler: src/api/index.handler
     events:
       - http:
-          path: /api/sign-bunny # this matches the base path
+          path: /api # this matches the base path
           method: ANY
       - http:
-          path: /api/sign-bunny/{any+} # this matches any path, the token 'any' doesn't mean anything special
+          path: /api/{any+} # this matches any path, the token 'any' doesn't mean anything special
           method: ANY
   exyos:
     handler: src/index.handler

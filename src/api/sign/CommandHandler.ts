@@ -2,8 +2,12 @@ import {signCommand} from '../../sign/SignCommand';
 import teapot from '../../Teapot';
 
 const processRequest = (request): Promise<string> => {
-  console.log(request);
-  return signCommand(request.signWords);
+  const signWords = (request && request.body || {}).signWords;
+  if (signWords) {
+    return signCommand(signWords);
+  } else {
+    return Promise.reject();
+  }
 };
 
 const handler = (request, response) => {
@@ -13,7 +17,13 @@ const handler = (request, response) => {
       .send(responseBody);
   })
     .catch(() => {
-      response.status(418).end(teapot);
+      response.set('Content-Type', 'text/plain');
+      response.status(400).end(`
+      Expected request body of:
+        {
+          signWords: "Turn down for what?"
+        }
+      `);
     });
 };
 
