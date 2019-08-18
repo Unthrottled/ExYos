@@ -15,7 +15,8 @@
     "serverless-http": "^2.0.2"
   },
   "scripts": {
-    "start": "sls offline start",
+    "start": "DEV=true sls offline start",
+    "start:not:dev": "sls offline start",
     "test": "jest --coverage",
     "lint": "tslint src/**/*.ts"
   },

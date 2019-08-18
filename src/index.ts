@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const application = express();
 
 application.use(bodyParser.json({strict: false}));
-application.use(bodyParser.urlencoded({extended: true}));
+application.use(bodyParser.urlencoded({extended: true, }));
 application.post('/', commandHandler);
 
 application.use((request, response) => {
