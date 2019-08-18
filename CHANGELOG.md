@@ -1,6 +1,10 @@
 Changelog
 ---
 
+## 2.1.0
+
+- Implemented request verification [for slack](https://api.slack.com/docs/verifying-requests-from-slack).
+
 ## 2.0.0
 
 - External API Availability!!

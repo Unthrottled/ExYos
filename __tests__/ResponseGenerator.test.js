@@ -1,3 +1,5 @@
+import {isValidSlackRequest} from "../src/Security";
+
 const {generateResponse} = require('../src/ResponseGenerator');
 
 const BASE_REQUEST = {
@@ -27,8 +29,8 @@ describe('ResponseGenerator', () => {
           ...BASE_REQUEST
         }
       };
-      const result = generateResponse(request);
-      return expect(result).rejects.toEqual("Not a Slack Request")
+      const result = isValidSlackRequest(request);
+      return expect(result).toBeFalsy()
     });
 
 

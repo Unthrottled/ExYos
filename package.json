@@ -1,6 +1,6 @@
 {
   "name": "exyos",
-  "version": "2.0.0.0",
+  "version": "2.1.0",
   "description": "Express Yourself Slack Slash Command",
   "main": "src/index.ts",
   "repository": "git@github.com:cyclic-reference/ExYos.git",
@@ -15,7 +15,8 @@
     "serverless-http": "^2.0.2"
   },
   "scripts": {
-    "start": "sls offline start",
+    "start": "DEV=true sls offline start",
+    "start:not:dev": "sls offline start",
     "test": "jest --coverage",
     "lint": "tslint src/**/*.ts"
   },
