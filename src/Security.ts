@@ -20,7 +20,7 @@ export const isValidSlackRequest = request => {
   const slackSecurity = request && request.header &&
     request.header('X-Slack-Signature');
   return !!slackSecurity &&slackSecurity === createHash(request)
-}
+};
 
 export const isSlackRequest = request => {
   return isDev() || isValidSlackRequest(request);
