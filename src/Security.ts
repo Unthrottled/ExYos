@@ -16,11 +16,15 @@ function createHash(request: any) {
   return false;
 }
 
-export const isSlackRequest = request => {
+export const isValidSlackRequest = request => {
   const slackSecurity = request && request.header &&
     request.header('X-Slack-Signature');
-  return isDev() || (!!slackSecurity &&slackSecurity === createHash(request));
+  return !!slackSecurity &&slackSecurity === createHash(request)
+}
+
+export const isSlackRequest = request => {
+  return isDev() || isValidSlackRequest(request);
 };
 
 
-const isDev = () => process.env.DEV;
+const isDev = () => process.env.DEV || process.env.JEST_WORKER_ID;
