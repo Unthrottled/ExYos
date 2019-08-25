@@ -34,7 +34,7 @@ describe('Suddenly', () => {
     expect(text).toEqual(
 `⊂_ヽ
 　 ＼＼ ＿
-  　　 ＼(　•_•)
+  　　 ＼(　●_●)
 　　　 <　⌒ヽ
 　　　/ 　 へ＼
 　　 /　　/　＼＼
@@ -65,7 +65,7 @@ describe('Suddenly', () => {
     expect(text).toEqual(
 `⊂_ヽ
 　 ＼＼ ＿
-  　　 ＼(　•_•) F
+  　　 ＼(　●_●) F
 　　　 <　⌒ヽ A
 　　　/ 　 へ＼ B
 　　 /　　/　＼＼ U
