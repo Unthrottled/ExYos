@@ -1,5 +1,5 @@
 import {Command} from '../Command';
-import CommandError from "../CommandError";
+import CommandError from '../CommandError';
 import {
   ALARMED,
   ANGUISH,
@@ -14,8 +14,8 @@ import {
   SMILE,
   SOLEMN,
   STRAINED,
-  U_CANT_BE_SRS, YELLING
-} from "../Faces";
+  U_CANT_BE_SRS, YELLING,
+} from '../Faces';
 import {suddenlyPieces} from './Suddenly';
 
 const defaultPhrase = '';
@@ -49,12 +49,12 @@ const buildFace = (face: string): string => {
 };
 
 interface FaceType {
-  type: string
+  type: string;
 }
 
 interface SuddenlyArguments {
-  face: FaceType,
-  phrase: string,
+  face: FaceType;
+  phrase: string;
 }
 
 const AVAILABLE_COMMANDS = [
