@@ -1,6 +1,43 @@
 Changelog
 ---
 
+## 2.2.0
+
+- More `Suddenly` Expressions!
+
+    - `/exyos suddenly -look` ( ఠ_ఠ)
+    - `/exyos suddenly -deadpan` ( ●_●)
+    - `/exyos suddenly -solemn` ( º _ º)
+    - `/exyos suddenly -lenny` ( ͡° ͜ʖ ͡°)
+    - `/exyos suddenly -anguish` ( ಥ_ಥ)
+    - `/exyos suddenly -smile` ( ◕ ◡ ◕)
+    - `/exyos suddenly -happy` ( ᐛ)
+    - `/exyos suddenly -pretty` ( ✿◕‿◕)
+    - `/exyos suddenly -cool` (-■_■)
+    - `/exyos suddenly -strained` ( ‶⇀‸↼)
+    - `/exyos suddenly -puppy` ( •ᴥ•)
+    - `/exyos suddenly -yell` ( °□°)
+    - `/exyos suddenly -rage` ( ಠ益ಠ)
+    - `/exyos suddenly -alarmed` ( ◉Д◉)
+    -`/exyos suddenly -cool swagger`
+    
+    ```
+    ⊂_ヽ
+    　 ＼＼ ＿
+     　　 ＼(-■_■) S
+    　　　 <　⌒ヽ W
+    　　　/ 　 へ＼ A
+    　　 /　　/　＼＼ G
+    　　 ﾚ　ノ　　 ヽ_つ G
+    　　/　/ E
+    　 /　/| R
+    　(　(ヽ
+    　|　|、＼
+    　| 丿 ＼ ⌒)
+    　| |　　) /
+    `ノ )　 Lﾉ
+    ```
+
 ## 2.1.0
 
 - Implemented request verification [for slack](https://api.slack.com/docs/verifying-requests-from-slack).

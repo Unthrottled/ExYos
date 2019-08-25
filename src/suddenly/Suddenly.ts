@@ -1,7 +1,7 @@
 export const suddenlyPieces = [
   `⊂_ヽ
 　 ＼＼ ＿
-  　　 ＼(　•_•)`,
+  　　 ＼(%face%)`,
   `　　　 <　⌒ヽ`,
   `　　　/ 　 へ＼`,
   `　　 /　　/　＼＼`,
