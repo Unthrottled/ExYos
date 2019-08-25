@@ -14,7 +14,7 @@ import {
   SMILE,
   SOLEMN,
   STRAINED,
-  U_CANT_BE_SRS
+  U_CANT_BE_SRS, YELLING
 } from "../Faces";
 import {suddenlyPieces} from './Suddenly';
 
@@ -36,6 +36,7 @@ const SPECIAL_FACES = [
   PRETTY,
   COOL,
   SMILE,
+  STRAINED,
 ];
 
 const buildFace = (face: string): string => {
@@ -43,7 +44,7 @@ const buildFace = (face: string): string => {
   if (!SPECIAL_FACES.reduce((accum, specialFace) => accum || specialFace === face, false)) {
     return `　${actualFace}`;
   } else {
-    return actualFace;
+    return ` ${actualFace}`;
   }
 };
 
@@ -61,6 +62,7 @@ const AVAILABLE_COMMANDS = [
   '-alarmed',
   '-solemn',
   '-lenny',
+  '-yell',
   '-anguish',
   '-smile',
   '-look',
@@ -71,7 +73,7 @@ const AVAILABLE_COMMANDS = [
   '-puppy',
   '-strained',
   '-help',
-];
+].sort();
 
 const getAvailableArgumentsString = () =>
   `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
@@ -93,6 +95,8 @@ const actuallyParseArguments = (flipArgumentToParse: string): Promise<SuddenlyAr
       builtArguments.face = {type: SMILE};
     } else if (currentString === '-look') {
       builtArguments.face = {type: LOOK};
+    } else if (currentString === '-yell') {
+      builtArguments.face = {type: YELLING};
     } else if (currentString === '-happy') {
       builtArguments.face = {type: HAPPY};
     } else if (currentString === '-deadpan') {
@@ -106,7 +110,7 @@ const actuallyParseArguments = (flipArgumentToParse: string): Promise<SuddenlyAr
     } else if (currentString === '-strained') {
       builtArguments.face = {type: STRAINED};
     } else if (currentString === '-help') {
-      throw new CommandError(`Flip Usage`, getAvailableArgumentsString());
+      throw new CommandError(`Suddenly Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {
       throw new CommandError(`Unknown Argument: ${currentString}`, getAvailableArgumentsString());
     } else {
