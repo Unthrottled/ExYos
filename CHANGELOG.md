@@ -1,5 +1,12 @@
 Changelog
 ---
+## 2.3.0
+- Added force velocity command argument
+    - `/exyos flip -happy -force` (╯ᐛ)╯彡┻━┻
+    
+- Able to flip items upside-down to the left
+    - `/exyos flip -happy -force -left` ┻━┻ミ└(ᐖ└)
+    - `/exyos flip -cool -left Thanks Obama` ɐɯɐqO sʞuɐɥ┴︵└(■_■-└)
 
 ## 2.2.0
 
