@@ -21,25 +21,32 @@ import {flipWord} from './WordFlip';
 const extractFlipExpressionParts = flipArguments => {
   return parseFlipArguments(flipArguments)
     .then(parsedArguments => {
-      const face = getFace(parsedArguments.face.type);
-      const velocity = getVelocity(parsedArguments.velocity.type);
+      const direction = parsedArguments.direction.type;
+      const face = getFace(`${parsedArguments.face.type}_${direction}`) ||
+        getFace(parsedArguments.face.type);
+      const velocity = getVelocity(`${parsedArguments.velocity.type}_${direction}`) ||
+        getVelocity(parsedArguments.velocity.type);
       const flippedItem = getFlippedItem(parsedArguments.flippedItem);
       return {
         face,
         velocity,
         flippedItem,
+        direction,
       };
     });
 };
 
 const NORMAL_VELOCITY = 'NORMAL_VELOCITY';
 const FORCEFUL_VELOCITY = 'FORCEFUL_VELOCITY';
+const FORCEFUL_VELOCITY_LEFT = 'FORCEFUL_VELOCITY_LEFT';
 const getVelocity = velocityType => {
   switch (velocityType) {
     case NORMAL_VELOCITY:
       return '︵';
     case FORCEFUL_VELOCITY:
       return '彡';
+    case FORCEFUL_VELOCITY_LEFT:
+      return 'ミ';
   }
 };
 
@@ -60,8 +67,10 @@ const AVAILABLE_COMMANDS = [
   '-alarmed',
   '-lenny',
   '-anguish',
+  '-left',
   '-smile',
   '-happy',
+  '-force',
   '-cool',
   '-puppy',
   '-strained',
@@ -70,6 +79,9 @@ const AVAILABLE_COMMANDS = [
   '-deadpan',
   '-help',
 ];
+
+const RIGHT = 'RIGHT';
+const LEFT = 'LEFT';
 
 function getAvailableArgumentsString() {
   return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
@@ -92,6 +104,10 @@ const actuallyParseArguments = flipArgumentToParse => {
       builtArguments.face = {type: LENNY};
     } else if (currentString === '-anguish') {
       builtArguments.face = {type: ANGUISH};
+    } else if (currentString === '-left') {
+      builtArguments.direction = {type: LEFT};
+    } else if (currentString === '-force') {
+      builtArguments.velocity = {type: FORCEFUL_VELOCITY};
     } else if (currentString === '-smile') {
       builtArguments.face = {type: SMILE};
     } else if (currentString === '-look') {
@@ -128,6 +144,9 @@ const actuallyParseArguments = flipArgumentToParse => {
     face: {
       type: YELLING,
     },
+    direction: {
+      type: RIGHT,
+    },
   });
   return Promise.resolve(argumentProjection)
     .then(argumentProj => {
@@ -163,6 +182,9 @@ const parseFlipArguments = flipArguments => {
           face: {
             type: YELLING,
           },
+          direction: {
+            type: RIGHT,
+          },
         };
       }
     });
@@ -170,5 +192,8 @@ const parseFlipArguments = flipArguments => {
 
 export const flipCommand: Command = flipArguments => {
   return extractFlipExpressionParts(flipArguments)
-    .then(({face, velocity, flippedItem}) => `(╯${face})╯${velocity}${flippedItem}`);
+    .then(({face, velocity, flippedItem, direction}) => {
+      return direction === RIGHT ? `(╯${face})╯${velocity}${flippedItem}` :
+        `${flippedItem}${velocity}└(${face}└)`;
+    });
 };
