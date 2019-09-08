@@ -60,19 +60,19 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
     } else if (currentString === '-look') {
       builtArguments.face = {type: LOOK};
     } else if (currentString === '-happy') {
-      builtArguments.face = {type: HAPPY_LEFT};
+      builtArguments.face = {type: HAPPY};
     } else if (currentString === '-right') {
       builtArguments.direction = {type: RIGHT};
     } else if (currentString === '-deadpan') {
       builtArguments.face = {type: U_CANT_BE_SRS};
     } else if (currentString === '-pretty') {
-      builtArguments.face = {type: PRETTY_LEFT};
+      builtArguments.face = {type: PRETTY};
     } else if (currentString === '-cool') {
-      builtArguments.face = {type: COOL_LEFT};
+      builtArguments.face = {type: COOL};
     } else if (currentString === '-puppy') {
       builtArguments.face = {type: PUPPY};
     } else if (currentString === '-strained') {
-      builtArguments.face = {type: STRAINED_LEFT};
+      builtArguments.face = {type: STRAINED};
     }  else if (currentString === '-help') {
       throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {
