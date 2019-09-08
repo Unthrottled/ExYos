@@ -16,11 +16,15 @@ import {
 } from '../Faces';
 import {PERSON, PHRASE, TABLE} from './FlipableItems';
 
+const RIGHT = 'RIGHT';
+const LEFT = 'LEFT';
+
 const AVAILABLE_COMMANDS = [
   '-table',
   '-rage',
   '-alarmed',
   '-lenny',
+  '-right',
   '-anguish',
   '-smile',
   '-happy',
@@ -56,17 +60,19 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
     } else if (currentString === '-look') {
       builtArguments.face = {type: LOOK};
     } else if (currentString === '-happy') {
-      builtArguments.face = {type: HAPPY_LEFT};
+      builtArguments.face = {type: HAPPY};
+    } else if (currentString === '-right') {
+      builtArguments.direction = {type: RIGHT};
     } else if (currentString === '-deadpan') {
       builtArguments.face = {type: U_CANT_BE_SRS};
     } else if (currentString === '-pretty') {
-      builtArguments.face = {type: PRETTY_LEFT};
+      builtArguments.face = {type: PRETTY};
     } else if (currentString === '-cool') {
-      builtArguments.face = {type: COOL_LEFT};
+      builtArguments.face = {type: COOL};
     } else if (currentString === '-puppy') {
       builtArguments.face = {type: PUPPY};
     } else if (currentString === '-strained') {
-      builtArguments.face = {type: STRAINED_LEFT};
+      builtArguments.face = {type: STRAINED};
     }  else if (currentString === '-help') {
       throw new CommandError(`Un-Flip Usage`, getAvailableArgumentsString());
     } else if (currentString.startsWith('-')) {
@@ -82,6 +88,9 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
     },
     face: {
       type: SOLEMN,
+    },
+    direction: {
+      type: LEFT,
     },
   });
   return Promise.resolve(argumentProjection)
@@ -115,6 +124,9 @@ const parseUnFlipArguments = unflipArguments => {
           face: {
             type: SOLEMN,
           },
+          direction: {
+            type: LEFT,
+          },
         };
       }
     });
@@ -134,16 +146,22 @@ const getUnFlippedItem = item => {
 const extractUnFlipExpressionParts = flipArguments => {
   return parseUnFlipArguments(flipArguments)
     .then(parsedArguments => {
-      const face = getFace(parsedArguments.face.type);
+      const direction = parsedArguments.direction.type;
+      const face = getFace(`${parsedArguments.face.type}_${direction}`) ||
+        getFace(parsedArguments.face.type);
       const unFlippedItem = getUnFlippedItem(parsedArguments.flippedItem);
       return {
         face,
         unFlippedItem,
+        direction,
       };
     });
 };
 
 export const unFlipCommand: Command = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)
-    .then(({face, unFlippedItem}) => `${unFlippedItem}ノ(${face}ノ)`);
+    .then(({face, unFlippedItem, direction}) => {
+      return direction === RIGHT ? `(ヽ${face})ヽ${unFlippedItem}` :
+         `${unFlippedItem}ノ(${face}ノ)`;
+    });
 };

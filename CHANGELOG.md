@@ -1,5 +1,11 @@
 Changelog
 ---
+
+## 2.4.0
+- Able to unflip items rightside-up to the right
+    - `unflip -happy -right` (ヽᐛ)ヽ┳━┳
+    - `unflip -cool -right Thanks Obama` (ヽ-■_■)ヽThanks Obama
+
 ## 2.3.0
 - Added force velocity command argument
     - `/exyos flip -happy -force` (╯ᐛ)╯彡┻━┻
