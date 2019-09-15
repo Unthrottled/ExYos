@@ -190,10 +190,12 @@ const parseFlipArguments = flipArguments => {
     });
 };
 
+export const constructFlip = ({face, velocity, flippedItem, direction}) => {
+  return direction === RIGHT ? `(╯${face})╯${velocity}${flippedItem}` :
+    `${flippedItem}${velocity}└(${face}└)`;
+};
+
 export const flipCommand: Command = flipArguments => {
   return extractFlipExpressionParts(flipArguments)
-    .then(({face, velocity, flippedItem, direction}) => {
-      return direction === RIGHT ? `(╯${face})╯${velocity}${flippedItem}` :
-        `${flippedItem}${velocity}└(${face}└)`;
-    });
+    .then(constructFlip);
 };
