@@ -1,6 +1,11 @@
 Changelog
 ---
 
+## 2.5.0
+- Able to unflip items rightside-up with force
+    - `unflip -happy -flip` ┳━┳︵└(ᐖ└)
+    - `unflip -cool -right -flip Thanks Obama` (╯-■_■)╯︵Thanks Obama
+    
 ## 2.4.0
 - Able to unflip items rightside-up to the right
     - `unflip -happy -right` (ヽᐛ)ヽ┳━┳

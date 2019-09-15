@@ -3,18 +3,21 @@ import CommandError from '../CommandError';
 import {
   ALARMED,
   ANGUISH,
-  COOL, COOL_LEFT,
+  COOL,
   getFace,
-  HAPPY, HAPPY_LEFT,
+  HAPPY,
   LENNY,
   LOOK,
-  PRETTY, PRETTY_LEFT, PUPPY,
+  PRETTY,
+  PUPPY,
   RAGE,
   SMILE,
-  SOLEMN, STRAINED, STRAINED_LEFT,
+  SOLEMN,
+  STRAINED,
   U_CANT_BE_SRS,
 } from '../Faces';
 import {PERSON, PHRASE, TABLE} from './FlipableItems';
+import {constructFlip} from './FlipCommand';
 
 const RIGHT = 'RIGHT';
 const LEFT = 'LEFT';
@@ -25,6 +28,8 @@ const AVAILABLE_COMMANDS = [
   '-alarmed',
   '-lenny',
   '-right',
+  '-flip',
+  '-throw',
   '-anguish',
   '-smile',
   '-happy',
@@ -36,9 +41,25 @@ const AVAILABLE_COMMANDS = [
   '-deadpan',
   '-help'];
 
-function getAvailableArgumentsString() {
-  return `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
-}
+const getAvailableArgumentsString = () =>
+  `Available Arguments: ${AVAILABLE_COMMANDS.join(', ').trim()}`;
+
+const NO_VELOCITY = 'NO_VELOCITY';
+const NORMAL_VELOCITY = 'NORMAL_VELOCITY';
+const FORCEFUL_VELOCITY = 'FORCEFUL_VELOCITY';
+const FORCEFUL_VELOCITY_LEFT = 'FORCEFUL_VELOCITY_LEFT';
+const getVelocity = velocityType => {
+  switch (velocityType) {
+    case NORMAL_VELOCITY:
+      return '︵';
+    case FORCEFUL_VELOCITY:
+      return '彡';
+    case FORCEFUL_VELOCITY_LEFT:
+      return 'ミ';
+    default:
+      return false;
+  }
+};
 
 const actuallyParseUnFlipArguments = unflipArgumentToParse => {
   const parsedArguments = unflipArgumentToParse.split(' ');
@@ -61,6 +82,10 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
       builtArguments.face = {type: LOOK};
     } else if (currentString === '-happy') {
       builtArguments.face = {type: HAPPY};
+    } else if (currentString === '-flip') {
+      builtArguments.velocity = {type: NORMAL_VELOCITY};
+    } else if (currentString === '-throw') {
+      builtArguments.velocity = {type: FORCEFUL_VELOCITY};
     } else if (currentString === '-right') {
       builtArguments.direction = {type: RIGHT};
     } else if (currentString === '-deadpan') {
@@ -85,6 +110,9 @@ const actuallyParseUnFlipArguments = unflipArgumentToParse => {
     flippedItem: {
       type: PHRASE,
       payload: '',
+    },
+    velocity: {
+      type: NO_VELOCITY,
     },
     face: {
       type: SOLEMN,
@@ -127,6 +155,9 @@ const parseUnFlipArguments = unflipArguments => {
           direction: {
             type: LEFT,
           },
+          velocity: {
+            type: NO_VELOCITY,
+          },
         };
       }
     });
@@ -150,18 +181,28 @@ const extractUnFlipExpressionParts = flipArguments => {
       const face = getFace(`${parsedArguments.face.type}_${direction}`) ||
         getFace(parsedArguments.face.type);
       const unFlippedItem = getUnFlippedItem(parsedArguments.flippedItem);
+      const velocity = getVelocity(`${parsedArguments.velocity.type}_${direction}`) ||
+        getVelocity(parsedArguments.velocity.type);
       return {
         face,
         unFlippedItem,
         direction,
+        velocity,
       };
     });
 };
 
 export const unFlipCommand: Command = flipArguments => {
   return extractUnFlipExpressionParts(flipArguments)
-    .then(({face, unFlippedItem, direction}) => {
-      return direction === RIGHT ? `(ヽ${face})ヽ${unFlippedItem}` :
-         `${unFlippedItem}ノ(${face}ノ)`;
+    .then(({face, velocity, unFlippedItem, direction}) => {
+      if (velocity) {
+        return constructFlip({
+          face, velocity, flippedItem: unFlippedItem, direction,
+        });
+      } else {
+        return direction === RIGHT ? `(ヽ${face})ヽ${unFlippedItem}` :
+          `${unFlippedItem}ノ(${face}ノ)`;
+
+      }
     });
 };
